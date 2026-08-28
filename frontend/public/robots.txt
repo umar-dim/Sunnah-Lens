@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sunnahlens.com/sitemap.xml
