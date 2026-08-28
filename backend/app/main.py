@@ -20,7 +20,10 @@ app = FastAPI(title="Hadith AI Search API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://sunnah-lens.vercel.app",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

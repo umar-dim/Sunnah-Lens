@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+
 CREATE TABLE collections (
     id VARCHAR(100) PRIMARY KEY,
     name_en VARCHAR(255) NOT NULL,
