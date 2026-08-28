@@ -23,6 +23,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "https://sunnah-lens.vercel.app",
+        "https://sunnahlens.com",
+        "https://www.sunnahlens.com",
     ],
     allow_methods=["*"],
     allow_headers=["*"],
