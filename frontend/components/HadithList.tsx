@@ -37,12 +37,19 @@ export default function HadithList({
   }
 
   if (error) {
+    const isQuotaError = error === "API_QUOTA_EXHAUSTED";
     return (
       <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
         <p className="text-sm text-red-600">
-          Something went wrong. Please try again.
+          {isQuotaError
+            ? "Search is temporarily unavailable due to API limits."
+            : "Something went wrong. Please try again."}
         </p>
-        <p className="mt-1 text-xs text-red-400">{error}</p>
+        <p className="mt-1 text-xs text-red-400">
+          {isQuotaError
+            ? "Please try again later or use Text Search instead."
+            : error}
+        </p>
       </div>
     );
   }

@@ -21,6 +21,9 @@ export async function searchHadith(
   });
 
   if (!res.ok) {
+    if (res.status === 429) {
+      throw new Error("API_QUOTA_EXHAUSTED");
+    }
     throw new Error(`Search failed: ${res.status}`);
   }
 

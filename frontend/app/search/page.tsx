@@ -39,7 +39,11 @@ export default function SearchPage() {
       const data = await searchHadith(query, 7);
       setFreeResults(data.results);
     } catch (err) {
-      setFreeError(err instanceof Error ? err.message : "An error occurred");
+      if (err instanceof Error && err.message === "API_QUOTA_EXHAUSTED") {
+        setFreeError("API_QUOTA_EXHAUSTED");
+      } else {
+        setFreeError(err instanceof Error ? err.message : "An error occurred");
+      }
       setFreeResults([]);
     } finally {
       setFreeLoading(false);

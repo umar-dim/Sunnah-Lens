@@ -1,10 +1,10 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import close_pool, get_pool
-from app.embedding import embed_query
+from app.embedding import embed_query, APIQuotaError
 from app.models import (
     BookHadithsResponse,
     BookInfo,
@@ -54,7 +54,13 @@ app.add_middleware(
 @app.post("/api/search", response_model=SearchResponse)
 async def search(req: SearchRequest):
     pool = await get_pool()
-    query_embedding = await embed_query(req.query)
+    try:
+        query_embedding = await embed_query(req.query)
+    except APIQuotaError as e:
+        raise HTTPException(
+            status_code=429,
+            detail=str(e),
+        )
     rows = await search_hadiths(pool, query_embedding, req.top_k)
 
     results = [
