@@ -8,9 +8,14 @@ import { Button } from "@/components/ui/button";
 interface SearchBarProps {
   onSearch: (query: string) => void;
   isLoading: boolean;
+  placeholder?: string;
 }
 
-export default function SearchBar({ onSearch, isLoading }: SearchBarProps) {
+export default function SearchBar({
+  onSearch,
+  isLoading,
+  placeholder = "Search for a hadith topic...",
+}: SearchBarProps) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,7 +32,7 @@ export default function SearchBar({ onSearch, isLoading }: SearchBarProps) {
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a hadith topic..."
+          placeholder={placeholder}
           className="pl-10"
           disabled={isLoading}
         />

@@ -100,3 +100,11 @@ CREATE INDEX idx_hadiths_chapter
 
 CREATE INDEX idx_hadiths_reference
     ON hadiths(reference);
+
+CREATE INDEX idx_hadiths_collection_book
+    ON hadiths(collection_id, book_id);
+
+CREATE INDEX idx_hadiths_fts_en
+    ON hadiths USING GIN (
+        to_tsvector('english', coalesce(matn_en, '') || ' ' || coalesce(text_en, ''))
+    );

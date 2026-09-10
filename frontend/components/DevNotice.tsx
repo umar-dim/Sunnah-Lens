@@ -8,14 +8,25 @@ export default function DevNotice() {
           In Development
         </Badge>
         <h2 className="text-2xl font-bold tracking-tight text-stone-800">
-          Currently Supporting Partial Collections
+          Browse & Search the Nine Books
         </h2>
         <p className="mt-4 text-stone-500 leading-relaxed">
-          SUNNAH LENS is currently in development. We are supporting search on a
-          portion of <strong>Sahih Bukhari</strong> and <strong>Sahih
-          Muslim</strong> collections.
+          SUNNAH LENS provides access to the nine canonical hadith collections.
+          You can <strong>browse the full directory</strong> of collections, books,
+          and chapters, or search using two modes:
         </p>
-        <p className="mt-2 text-stone-500 leading-relaxed">
+        <ul className="mt-4 space-y-2 text-left text-stone-500 leading-relaxed max-w-md mx-auto">
+          <li>
+            <strong className="text-primary">Free Search</strong> — AI-powered
+            semantic search using vector embeddings. Currently covers a portion
+            of <strong>Sahih al-Bukhari</strong> and <strong>Sahih Muslim</strong>.
+          </li>
+          <li>
+            <strong className="text-primary">Text Search</strong> — Keyword-based
+            full-text search across all imported hadith collections.
+          </li>
+        </ul>
+        <p className="mt-4 text-stone-500 leading-relaxed">
           Our goal is to support{" "}
           <strong>all ~50,000 authenticated hadith</strong> by the end of 2026.
         </p>

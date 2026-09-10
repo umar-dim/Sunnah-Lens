@@ -19,6 +19,11 @@ export default function Navbar() {
               Search
             </Button>
           </Link>
+          <Link href="/directory">
+            <Button variant={pathname === "/directory" ? "default" : "ghost"}>
+              Directory
+            </Button>
+          </Link>
         </nav>
       </div>
     </header>
