@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -15,25 +15,51 @@ export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
+  const [lastQuery, setLastQuery] = useState("");
   const [filter, setFilter] = useState<BookSelection | null>({
     collection_ids: null,
     book_ids: null,
   });
+  const searchSeq = useRef(0); // only the latest search may write results
+  const rerunTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const handleSearch = async (query: string) => {
-    if (!filter) return;
+  const handleSearch = async (
+    query: string,
+    selection: BookSelection | null = filter,
+  ) => {
+    clearTimeout(rerunTimer.current);
+    if (!selection) return;
+    const seq = ++searchSeq.current;
+    setLastQuery(query);
     setLoading(true);
     setError(null);
     setSearched(true);
     try {
-      const data = await searchHadith(query, 7, filter);
+      const data = await searchHadith(query, 7, selection);
+      if (seq !== searchSeq.current) return;
       setResults(data.results);
     } catch (err) {
+      if (seq !== searchSeq.current) return;
       setError(err instanceof Error ? err.message : "An error occurred");
       setResults([]);
     } finally {
-      setLoading(false);
+      if (seq === searchSeq.current) setLoading(false);
     }
+  };
+
+  const handleFilterChange = (selection: BookSelection | null) => {
+    setFilter(selection);
+    if (!lastQuery) return;
+    clearTimeout(rerunTimer.current);
+    if (!selection) {
+      searchSeq.current++; // drop any in-flight search
+      setLoading(false);
+      setResults([]);
+      setError(null);
+      return;
+    }
+    // Debounced so ticking several boxes sends one request.
+    rerunTimer.current = setTimeout(() => handleSearch(lastQuery, selection), 400);
   };
 
   return (
@@ -66,7 +92,7 @@ export default function SearchPage() {
           </div>
 
           <div className="mb-4">
-            <BookFilter onChange={setFilter} />
+            <BookFilter onChange={handleFilterChange} />
           </div>
 
           <SearchBar
@@ -77,12 +103,20 @@ export default function SearchPage() {
           />
 
           <div className="mt-8">
-            <HadithList
-              results={results}
-              isLoading={loading}
-              error={error}
-              hasSearched={searched}
-            />
+            {lastQuery && !filter ? (
+              <div className="rounded-xl border border-dashed border-border bg-white/50 p-10 text-center">
+                <p className="text-stone-500">
+                  Select at least one book to search for &ldquo;{lastQuery}&rdquo;.
+                </p>
+              </div>
+            ) : (
+              <HadithList
+                results={results}
+                isLoading={loading}
+                error={error}
+                hasSearched={searched}
+              />
+            )}
           </div>
         </div>
       </main>
