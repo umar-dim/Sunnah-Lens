@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Search Hadith",
   description:
-    "Search authentic hadith from Bukhari and Muslim collections. Describe what you're looking for and find relevant prophetic traditions.",
+    "Search authentic hadith from the six canonical collections. Describe what you're looking for and find relevant prophetic traditions.",
   openGraph: {
     title: "Search Hadith — SUNNAH LENS",
     description:

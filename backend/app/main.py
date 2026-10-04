@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import close_pool, get_pool
@@ -61,7 +61,9 @@ async def search(req: SearchRequest):
             status_code=429,
             detail=str(e),
         )
-    rows = await search_hadiths(pool, query_embedding, req.top_k)
+    rows = await search_hadiths(
+        pool, query_embedding, req.top_k, req.collection_ids, req.book_ids
+    )
 
     results = [
         HadithResult(
@@ -94,7 +96,7 @@ async def search(req: SearchRequest):
 async def text_search(req: TextSearchRequest):
     pool = await get_pool()
     rows, total = await text_search_hadiths(
-        pool, req.query, req.collection_id, req.page, req.page_size
+        pool, req.query, req.collection_ids, req.book_ids, req.page, req.page_size
     )
 
     results = [
@@ -166,7 +168,11 @@ async def list_books(collection_id: str):
 
 
 @app.get("/api/books/{book_id}/hadiths", response_model=BookHadithsResponse)
-async def list_book_hadiths(book_id: int, page: int = 1, page_size: int = 20):
+async def list_book_hadiths(
+    book_id: int,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
+):
     pool = await get_pool()
     rows, total = await get_book_hadiths(pool, book_id, page, page_size)
     hadiths = [

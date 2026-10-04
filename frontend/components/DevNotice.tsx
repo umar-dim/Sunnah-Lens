@@ -1,5 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 
+const SIX_BOOKS = [
+  "Sahih al-Bukhari",
+  "Sahih Muslim*",
+  "Sunan Abi Dawud",
+  "Jami` at-Tirmidhi",
+  "Sunan an-Nasa'i",
+  "Sunan Ibn Majah",
+];
+
 export default function DevNotice() {
   return (
     <section className="border-t border-border px-6 py-16">
@@ -8,22 +17,32 @@ export default function DevNotice() {
           In Development
         </Badge>
         <h2 className="text-2xl font-bold tracking-tight text-stone-800">
-          Browse & Search the Nine Books
+          Browse &amp; Search the Six Books
         </h2>
         <p className="mt-4 text-stone-500 leading-relaxed">
-          SUNNAH LENS provides access to the nine canonical hadith collections.
-          You can <strong>browse the full directory</strong> of collections, books,
-          and chapters, or search using two modes:
+          SUNNAH LENS covers the <strong>Kutub al-Sittah</strong>, the six canonical
+          hadith collections:
+        </p>
+        <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1 text-left text-sm text-stone-600 max-w-md mx-auto">
+          {SIX_BOOKS.map((book) => (
+            <li key={book}>{book}</li>
+          ))}
+        </ul>
+        <p className="mt-2 text-xs text-stone-400">
+          * Sahih Muslim includes primary narrations only.
+        </p>
+        <p className="mt-6 text-stone-500 leading-relaxed">
+          <strong>Browse the directory</strong> by collection and book, and search
+          using two modes — each can be narrowed to the books you choose:
         </p>
         <ul className="mt-4 space-y-2 text-left text-stone-500 leading-relaxed max-w-md mx-auto">
           <li>
             <strong className="text-primary">Free Search</strong> — AI-powered
-            semantic search using vector embeddings. Currently covers a portion
-            of <strong>Sahih al-Bukhari</strong> and <strong>Sahih Muslim</strong>.
+            semantic search using vector embeddings, on the Search page.
           </li>
           <li>
-            <strong className="text-primary">Text Search</strong> — Keyword-based
-            full-text search across all imported hadith collections.
+            <strong className="text-primary">Keyword Search</strong> — full-text
+            search over the English text, in the Directory.
           </li>
         </ul>
         <p className="mt-4 text-stone-500 leading-relaxed">

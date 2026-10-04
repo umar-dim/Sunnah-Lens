@@ -1,5 +1,6 @@
 import type {
   BookHadithsResponse,
+  BookSelection,
   BooksResponse,
   DirectoryResponse,
   SearchResponse,
@@ -12,12 +13,13 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function searchHadith(
   query: string,
-  topK: number = 7,
+  topK: number,
+  filter: BookSelection,
 ): Promise<SearchResponse> {
   const res = await fetch(`${API_URL}/api/search`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, top_k: topK }),
+    body: JSON.stringify({ query, top_k: topK, ...filter }),
   });
 
   if (!res.ok) {
@@ -34,19 +36,14 @@ export async function searchHadith(
 
 export async function searchText(
   query: string,
-  collectionId?: string,
+  filter: BookSelection,
   page: number = 1,
   pageSize: number = 20,
 ): Promise<TextSearchResponse> {
   const res = await fetch(`${API_URL}/api/search/text`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      query,
-      collection_id: collectionId || null,
-      page,
-      page_size: pageSize,
-    }),
+    body: JSON.stringify({ query, ...filter, page, page_size: pageSize }),
   });
 
   if (!res.ok) {

@@ -16,14 +16,14 @@ export default function Footer() {
             >
               sunnah.com
             </a>{" "}
-            &middot; Powered by{" "}
+            &middot; Open source on{" "}
             <a
-              href="https://github.com/your-repo/hadith-ai"
+              href="https://github.com/umar-dim/Sunnah-Lens"
               target="_blank"
               rel="noopener noreferrer"
               className="underline underline-offset-2 hover:text-primary"
             >
-              hadith-ai
+              GitHub
             </a>
           </p>
           <p className="text-xs text-stone-400">

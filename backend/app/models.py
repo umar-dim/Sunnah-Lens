@@ -1,9 +1,16 @@
 from pydantic import BaseModel, Field
 
 
+class FilterFields(BaseModel):
+    # Both None = every collection. Otherwise a hadith matches if its collection
+    # is in collection_ids (whole collection) or its book is in book_ids.
+    collection_ids: list[str] | None = Field(default=None, max_length=6)
+    book_ids: list[int] | None = Field(default=None, max_length=500)
+
+
 # --- Free (Vector) Search ---
 
-class SearchRequest(BaseModel):
+class SearchRequest(FilterFields):
     query: str = Field(..., min_length=1, max_length=2000)
     top_k: int = Field(default=5, ge=1, le=20)
 
@@ -34,9 +41,8 @@ class SearchResponse(BaseModel):
 
 # --- Text (FTS) Search ---
 
-class TextSearchRequest(BaseModel):
+class TextSearchRequest(FilterFields):
     query: str = Field(..., min_length=1, max_length=2000)
-    collection_id: str | None = None
     page: int = Field(default=1, ge=1)
     page_size: int = Field(default=20, ge=1, le=100)
 

@@ -47,7 +47,7 @@ export default function HadithList({
         </p>
         <p className="mt-1 text-xs text-red-400">
           {isQuotaError
-            ? "Please try again later or use Text Search instead."
+            ? "Please try again later or use keyword search in the Directory."
             : error}
         </p>
       </div>

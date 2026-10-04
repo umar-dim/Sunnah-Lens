@@ -5,7 +5,7 @@ const features = [
     icon: BookOpen,
     title: "Authentic Sources",
     description:
-      "Hadith sourced from Sahih Bukhari and Sahih Muslim — the two most authentic collections in Islam.",
+      "Hadith from the six canonical collections, the Kutub al-Sittah, led by Sahih al-Bukhari and Sahih Muslim.",
   },
   {
     icon: Compass,

@@ -1,10 +1,12 @@
-# TODO: local DB refresh from cloud
+# TODO: Six-Books Refresh
 
-- [x] T1 — `pg_dump` safety backup of local → `local_before_refresh.dump` verified
-- [x] **Checkpoint A** — backup exists and lists 4 tables
-- [x] T2 — `pg_dump` cloud `--schema=public` → `cloud.dump`
-- [x] **Checkpoint B** — TOC shows 4 × TABLE DATA + 17 indexes
-- [x] T3 — drop/recreate local `public`, `CREATE EXTENSION vector`, `pg_restore -L` (SCHEMA entry filtered out)
-- [x] T4 — verify counts: 9 / 428 / 13030 / 36272, embeddings 22452; spot-check one row
-- [x] **Checkpoint C** — counts match (else roll back from T1 backup)
-- [ ] T5 — *optional, only on request:* point `backend/.env` at local + smoke test
+- [x] T1 — backend: `collection_ids`/`book_ids` on both search requests; shared SQL predicate; iterative scan for filtered vector search; R1 numeric hadith order; R2 `Query(ge,le)` on book hadiths
+  - Files: backend/app/models.py, search.py, main.py
+- [x] T2 — `backend/scripts/smoke_search.py` (stdlib) — passes against local uvicorn
+- [x] **Checkpoint A** — smoke passes; EXPLAIN shows HNSW index on filtered query
+- [x] T3 — `lib/types.ts`, `lib/api.ts` (filter params), `HadithCard` accepts text results (R3)
+- [x] T4 — `components/BookFilter.tsx` (collections + lazy sub-books, tri-state)
+- [x] T5 — `/search`: semantic only + BookFilter + Directory link
+- [x] T6 — `/directory`: text search + explainer + BookFilter + pagination + clear; breadcrumbs → buttons (R4)
+- [x] T7 — six-books copy (layout, search layout, Hero?, DevNotice, ImportanceSection, directory), Muslim "primary narrations only", footer GitHub link
+- [x] T8 — eslint, tsc, build, smoke, browser check; after-change code-review-and-quality

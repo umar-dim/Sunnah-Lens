@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 interface SearchBarProps {
   onSearch: (query: string) => void;
   isLoading: boolean;
+  disabled?: boolean;
   placeholder?: string;
 }
 
 export default function SearchBar({
   onSearch,
   isLoading,
+  disabled = false,
   placeholder = "Search for a hadith topic...",
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
@@ -37,7 +39,7 @@ export default function SearchBar({
           disabled={isLoading}
         />
       </div>
-      <Button type="submit" disabled={isLoading || !query.trim()}>
+      <Button type="submit" disabled={isLoading || disabled || !query.trim()}>
         {isLoading ? "Searching..." : "Search"}
       </Button>
     </form>
