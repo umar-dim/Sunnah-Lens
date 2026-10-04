@@ -1,5 +1,5 @@
 import asyncio
-from functools import partial
+from functools import lru_cache
 
 from google import genai
 from google.genai import types
@@ -34,19 +34,30 @@ def _get_client() -> genai.Client:
     return genai.Client(api_key=settings.GEMINI_API_KEY)
 
 
-async def embed_query(text: str) -> list[float]:
+# Re-running a search with a different book filter reuses the same query text,
+# so cache it to avoid spending a Gemini call per filter change. lru_cache does
+# not cache exceptions, so a quota error is retried on the next call.
+# ponytail: per-process cache, swap for a shared cache if we run several workers.
+@lru_cache(maxsize=512)
+def _embed_cached(text: str) -> tuple[float, ...]:
+    # Keep a reference: a garbage-collected genai Client closes its HTTP session mid-call.
     client = _get_client()
+    response = client.models.embed_content(
+        model=MODEL,
+        contents=text,
+        config=types.EmbedContentConfig(
+            task_type="RETRIEVAL_QUERY",
+            output_dimensionality=OUTPUT_DIMENSIONALITY,
+        ),
+    )
+    if not response.embeddings:
+        raise RuntimeError("Gemini returned no embeddings.")
+    return tuple(response.embeddings[0].values)
 
+
+async def embed_query(text: str) -> list[float]:
     try:
-        response = await asyncio.to_thread(
-            client.models.embed_content,
-            model=MODEL,
-            contents=text,
-            config=types.EmbedContentConfig(
-                task_type="RETRIEVAL_QUERY",
-                output_dimensionality=OUTPUT_DIMENSIONALITY,
-            ),
-        )
+        values = await asyncio.to_thread(_embed_cached, text)
     except Exception as e:
         if _is_rate_limit_error(e):
             raise APIQuotaError(
@@ -54,7 +65,4 @@ async def embed_query(text: str) -> list[float]:
             ) from e
         raise
 
-    if not response.embeddings:
-        raise RuntimeError("Gemini returned no embeddings.")
-
-    return response.embeddings[0].values
+    return list(values)
