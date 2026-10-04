@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -55,27 +55,60 @@ export default function DirectoryPage() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [searchKey, setSearchKey] = useState(0); // remounts SearchBar to clear its input
+  const searchSeq = useRef(0); // only the latest search may write results
+  const rerunTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const handleSearch = async (query: string, page: number = 1) => {
-    if (!filter) return;
+  const handleSearch = async (
+    query: string,
+    page: number = 1,
+    selection: BookSelection | null = filter,
+  ) => {
+    clearTimeout(rerunTimer.current);
+    if (!selection) return;
+    const seq = ++searchSeq.current;
     setSearchQuery(query);
     setSearchPage(page);
     setSearchLoading(true);
     setSearchError(null);
     try {
-      const data = await searchText(query, filter, page, hadithPageSize);
+      const data = await searchText(query, selection, page, hadithPageSize);
+      if (seq !== searchSeq.current) return;
       setSearchResults(data.results);
       setSearchTotal(data.total);
     } catch (err) {
+      if (seq !== searchSeq.current) return;
       setSearchError(err instanceof Error ? err.message : "Search failed");
       setSearchResults([]);
       setSearchTotal(0);
     } finally {
-      setSearchLoading(false);
+      if (seq === searchSeq.current) setSearchLoading(false);
     }
   };
 
+  // Drop any pending or in-flight search.
+  const cancelSearch = () => {
+    clearTimeout(rerunTimer.current);
+    searchSeq.current++;
+    setSearchLoading(false);
+  };
+
+  const handleFilterChange = (selection: BookSelection | null) => {
+    setFilter(selection);
+    if (!searchQuery) return;
+    if (!selection) {
+      cancelSearch();
+      setSearchResults([]);
+      setSearchTotal(0);
+      setSearchError(null);
+      return;
+    }
+    // Debounced so ticking several boxes sends one request.
+    clearTimeout(rerunTimer.current);
+    rerunTimer.current = setTimeout(() => handleSearch(searchQuery, 1, selection), 400);
+  };
+
   const clearSearch = () => {
+    cancelSearch();
     setSearchQuery("");
     setSearchResults([]);
     setSearchTotal(0);
@@ -212,7 +245,7 @@ export default function DirectoryPage() {
               </ul>
             </div>
             <div className="mb-3">
-              <BookFilter onChange={setFilter} />
+              <BookFilter onChange={handleFilterChange} />
             </div>
             <SearchBar
               key={searchKey}
@@ -227,7 +260,9 @@ export default function DirectoryPage() {
             <section>
               <div className="mb-4 flex items-center justify-between gap-4">
                 <p className="text-sm text-stone-500">
-                  {searchLoading
+                  {!filter
+                    ? <>Select at least one book to search for &ldquo;{searchQuery}&rdquo;</>
+                    : searchLoading
                     ? "Searching…"
                     : <>Found <strong>{searchTotal.toLocaleString()}</strong> result{searchTotal !== 1 ? "s" : ""} for &ldquo;{searchQuery}&rdquo;</>}
                 </p>
@@ -237,7 +272,7 @@ export default function DirectoryPage() {
                 </Button>
               </div>
 
-              {searchError ? (
+              {!filter ? null : searchError ? (
                 <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
                   <p className="text-sm text-red-600">{searchError}</p>
                 </div>
