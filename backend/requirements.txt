@@ -1,7 +1,0 @@
-google-genai
-psycopg2-binary
-python-dotenv
-fastapi
-uvicorn[standard]
-asyncpg
-pydantic-settings

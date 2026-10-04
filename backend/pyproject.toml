@@ -1,0 +1,16 @@
+[project]
+name = "sunnah-lens-backend"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "google-genai",
+    "psycopg2-binary",
+    "python-dotenv",
+    "fastapi",
+    "uvicorn[standard]",
+    "asyncpg",
+    "pydantic-settings",
+]
+
+[tool.uv]
+package = false
