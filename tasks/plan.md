@@ -1,19 +1,61 @@
-# Plan: Six-Books Refresh (see SPEC.md)
+# Plan: Re-run search when the book filter changes
 
-## Dependency graph
-```
-T1 backend filters + R1/R2 ──► T2 smoke script ──► (checkpoint A: API verified)
-                                                     │
-T3 api.ts/types + HadithCard (R3) ───────────────────┤
-T4 BookFilter component ─────────────────────────────┤
-                                                     ▼
-                         T5 /search page   T6 /directory page (+R4)
-                                                     ▼
-                         T7 copy + footer link ──► T8 verify + after-review
-```
-T3/T4 are independent of each other; T5/T6 need T1, T3, T4.
+## Overview
+On `/search` (semantic) and `/directory` (keyword), changing the book filter after a search
+leaves the old results on screen. After this change, the active search re-runs with the new filter.
 
-## Risks
-- Filtered HNSW returning < top_k → `hnsw.iterative_scan = relaxed_order` (pgvector 0.8.2). Verified by smoke + EXPLAIN.
-- Very selective (single small book) vector filter may scan many tuples → measure; fallback = exact scan.
-- Smoke runs against the DB in `backend/.env` (cloud) — read-only queries only.
+## Architecture Decisions
+- **Handler-driven, debounced (400 ms).** `BookFilter.onChange` → page sets the filter and, if a
+  query is active, schedules a re-run (timer in a ref). Ticking several boxes fires one request.
+  Done in the handler rather than a `useEffect` to keep the existing "filter is passed in
+  explicitly" flow and avoid effect/state lint issues.
+- **Latest request wins.** Each search takes an id from a ref counter; a response whose id
+  isn't the latest is dropped. Without this, debounced re-runs plus manual searches can land
+  out of order. (This only covers search, not directory browsing; that's follow-up #2.)
+- **Re-runs reset to page 1** (keyword search); the old page number may not exist under the new filter.
+- **Nothing selected** → cancel any pending re-run, clear the results, and show "Select at least one book".
+  The query stays, so re-selecting books runs it again.
+- **Cache query embeddings in the backend** (`functools.lru_cache(maxsize=512)` on a sync helper).
+  A semantic re-run with the same text then costs no Gemini call, so toggling filters doesn't
+  burn quota. Exceptions (quota errors) aren't cached by `lru_cache`.
+- No shared hook: two call sites with ~15 lines each. Extract one if a third appears.
+
+## Task List
+
+### Task 1: Cache query embeddings (XS)
+**Acceptance:**
+- [ ] Repeating a semantic search for the same text makes no second Gemini call.
+- [ ] Quota errors are not cached; the next call retries.
+
+**Verification:** smoke script passes; the same `/api/search` call twice: second is noticeably
+faster (no ~300 ms+ embedding round-trip).
+**Dependencies:** None. **Files:** `backend/app/embedding.py`
+
+### Task 2: `/directory` keyword search follows the filter (S)
+**Acceptance:**
+- [ ] With an active query, changing the filter re-runs the search on page 1 after ~400 ms; quick changes send one request.
+- [ ] A stale response never replaces a newer one.
+- [ ] With nothing selected, results clear and "Select at least one book" shows; re-selecting runs the search again.
+
+**Verification:** eslint + tsc + build; manual: search "prayer", untick collections → total updates.
+**Dependencies:** None. **Files:** `frontend/app/directory/page.tsx`
+
+### Task 3: `/search` semantic search follows the filter (S)
+**Acceptance:** same three criteria as Task 2 (no paging).
+**Verification:** eslint + tsc + build; manual: search, narrow to one collection → all badges match it.
+**Dependencies:** Task 1 (so re-runs don't spend quota). **Files:** `frontend/app/search/page.tsx`
+
+### Checkpoint: Complete
+- [ ] eslint, tsc, `npm run build` clean; `scripts/smoke_search.py` passes
+- [ ] Manual click-through of both pages (no browser automation here → user confirms)
+- [ ] After-change review
+
+## Risks and Mitigations
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Each filter click burns a Gemini call | Med | Task 1 cache + debounce |
+| Out-of-order responses show the wrong filter's results | Med | latest-request-wins guard |
+| Embedding cache memory | Low | 512 × 1536 floats ≈ 6 MB worst case |
+
+## Open Questions
+- None. Defaults: 400 ms debounce, reset to page 1.
