@@ -68,7 +68,7 @@ SECONDS_BETWEEN_REQUESTS = 60.0
 #
 # You can increase this later if your requests comfortably
 # stay under your project's token limits.
-BATCH_SIZE = 10
+BATCH_SIZE = 100
 
 
 # ============================================================
@@ -252,12 +252,17 @@ def main():
         while True:
 
             # ------------------------------------------------
-            # Get the next batch that has NOT been embedded.
+            # Get the next batch that has NOT been embedded
+            # WITH THIS MODEL.
             #
-            # The embedding itself is the status.
+            # A missing hadith_embeddings row is the status, so
+            # re-pointing MODEL at a new model backfills the whole
+            # corpus for it without touching the existing rows.
             #
-            # NULL  = not processed
-            # VALUE = processed
+            # Rows with no English text are filtered out in SQL --
+            # they can never be embedded, and leaving them in the
+            # result would wedge the run permanently once a whole
+            # page of them reached the top of the ordering.
             # ------------------------------------------------
 
             with connection.cursor() as cursor:
@@ -265,16 +270,23 @@ def main():
                 cursor.execute(
                     """
                     SELECT
-                        id,
-                        reference,
-                        text_en,
-                        matn_en
-                    FROM hadiths
-                    WHERE embedding IS NULL
-                    ORDER BY id
+                        h.id,
+                        h.reference,
+                        h.text_en,
+                        h.matn_en
+                    FROM hadiths h
+                    LEFT JOIN hadith_embeddings e
+                           ON e.hadith_id = h.id
+                          AND e.model = %s
+                    WHERE e.hadith_id IS NULL
+                      AND coalesce(
+                              nullif(trim(h.matn_en), ''),
+                              nullif(trim(h.text_en), '')
+                          ) IS NOT NULL
+                    ORDER BY h.id
                     LIMIT %s
                     """,
-                    (BATCH_SIZE,),
+                    (MODEL, BATCH_SIZE),
                 )
 
                 rows = cursor.fetchall()
@@ -485,19 +497,15 @@ def main():
 
                     cursor.execute(
                         """
-                        UPDATE hadiths
-                        SET
-                            embedding = %s,
-                            embedding_model = %s,
-                            embedding_created_at = %s
-                        WHERE id = %s
-                          AND embedding IS NULL
+                        INSERT INTO hadith_embeddings
+                            (hadith_id, model, embedding)
+                        VALUES (%s, %s, %s)
+                        ON CONFLICT (hadith_id, model) DO NOTHING
                         """,
                         (
-                            embedding,
-                            MODEL,
-                            datetime.now(timezone.utc),
                             hadith_id,
+                            MODEL,
+                            embedding,
                         ),
                     )
 

@@ -108,3 +108,21 @@ CREATE INDEX idx_hadiths_fts_en
     ON hadiths USING GIN (
         to_tsvector('english', coalesce(matn_en, '') || ' ' || coalesce(text_en, ''))
     );
+
+CREATE TABLE hadith_embeddings (
+    hadith_id  integer      NOT NULL
+        REFERENCES hadiths(id)
+        ON DELETE CASCADE,
+    model      varchar(100) NOT NULL,
+    embedding  vector(1536) NOT NULL,
+    created_at timestamptz  NOT NULL DEFAULT now(),
+
+    PRIMARY KEY (hadith_id, model)
+);
+
+-- One PARTIAL HNSW index per model. A shared index over mixed models returns
+-- meaningless neighbours, and filtering a full index post-filters and wrecks
+-- recall. Add a matching index when adding a model.
+CREATE INDEX idx_hadith_emb_gemini_001
+    ON hadith_embeddings USING hnsw (embedding vector_cosine_ops)
+    WHERE model = 'gemini-embedding-001';

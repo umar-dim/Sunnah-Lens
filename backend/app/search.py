@@ -2,9 +2,23 @@ from __future__ import annotations
 
 import asyncpg
 
+from app.embedding import MODEL as EMBED_MODEL
+
 # --- Vector Search ---
 
-SEARCH_SQL = """
+def _search_sql(model: str) -> str:
+    # The model name must be a LITERAL, not a bind param: Postgres can only use
+    # the partial HNSW index if it can prove the predicate matches at plan time.
+    # It is a code-level constant, never user input.
+    return f"""
+WITH nearest AS (
+    SELECT hadith_id,
+           1 - (embedding <=> $1::text::vector) AS similarity
+    FROM hadith_embeddings
+    WHERE model = '{model}'
+    ORDER BY embedding <=> $1::text::vector
+    LIMIT $2
+)
 SELECT
     h.id,
     h.collection_id,
@@ -18,18 +32,21 @@ SELECT
     h.narrator,
     h.grade_en,
     h.grade_ar,
-    1 - (h.embedding <=> $1::text::vector) AS similarity,
+    n.similarity,
     c.name_en AS collection_name,
     b.name_en AS book_name,
     ch.name_en AS chapter_name
-FROM hadiths h
+FROM nearest n
+JOIN hadiths h ON h.id = n.hadith_id
 LEFT JOIN collections c ON c.id = h.collection_id
 LEFT JOIN books b ON b.id = h.book_id
 LEFT JOIN chapters ch ON ch.id = h.chapter_id
-WHERE h.embedding IS NOT NULL
-ORDER BY h.embedding <=> $1::text::vector
-LIMIT $2
+ORDER BY n.similarity DESC
 """
+
+
+SEARCH_SQL = _search_sql(EMBED_MODEL)
+
 
 # --- Text Search (FTS) ---
 
@@ -138,10 +155,12 @@ async def search_hadiths(
     pool: asyncpg.Pool,
     query_embedding: list[float],
     top_k: int,
+    model: str = EMBED_MODEL,
 ) -> list[dict]:
     embedding_str = _embedding_to_pgvector(query_embedding)
+    sql = SEARCH_SQL if model == EMBED_MODEL else _search_sql(model)
     async with pool.acquire() as conn:
-        rows = await conn.fetch(SEARCH_SQL, embedding_str, top_k)
+        rows = await conn.fetch(sql, embedding_str, top_k)
         return [dict(row) for row in rows]
 
 
