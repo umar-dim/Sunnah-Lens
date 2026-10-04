@@ -15,11 +15,11 @@ from google.genai import types
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("LOCAL_DATABASE_URL")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not set.")
+    raise RuntimeError("LOCAL_DATABASE_URL is not set.")
 
 if not GEMINI_API_KEY:
     raise RuntimeError("GEMINI_API_KEY is not set.")

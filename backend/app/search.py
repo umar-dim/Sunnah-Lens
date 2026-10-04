@@ -13,10 +13,10 @@ def _search_sql(model: str) -> str:
     return f"""
 WITH nearest AS (
     SELECT hadith_id,
-           1 - (embedding <=> $1::text::vector) AS similarity
+           1 - (embedding <=> $1::text::halfvec) AS similarity
     FROM hadith_embeddings
     WHERE model = '{model}'
-    ORDER BY embedding <=> $1::text::vector
+    ORDER BY embedding <=> $1::text::halfvec
     LIMIT $2
 )
 SELECT
