@@ -5,6 +5,8 @@
   --foreground: #1A1A1A;
   --primary: #1B5E20;
   --primary-light: #E8F5E9;
+  --primary-deep: oklch(39.3% 0.095 152.535);
+  --ring: oklch(52.7% 0.154 150.069);
   --border: #E8E0D4;
 }
 
@@ -13,12 +15,19 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
+  --color-primary-deep: var(--primary-deep);
+  --color-ring: var(--ring);
   --color-border: var(--border);
-  --font-sans: var(--font-public-sans);
+  --font-sans: var(--font-public-sans), var(--font-noto-sans-arabic);
   --font-arabic: var(--font-noto-sans-arabic);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+::selection {
+  background: var(--primary-light);
+  color: var(--primary);
 }

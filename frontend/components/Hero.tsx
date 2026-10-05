@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function Hero() {
   return (
@@ -19,8 +20,8 @@ export default function Hero() {
         instant — simply describe what you&apos;re looking for, and find the
         relevant hadith.
       </p>
-      <Link href="/search" className="mt-10">
-        <Button size="lg">Start Searching</Button>
+      <Link href="/search" className={cn(buttonVariants({ size: "lg" }), "mt-10")}>
+        Start Searching
       </Link>
     </section>
   );

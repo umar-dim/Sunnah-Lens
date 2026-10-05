@@ -125,7 +125,7 @@ export default function BookFilter({ onChange }: BookFilterProps) {
                   <label className="flex flex-1 cursor-pointer items-center gap-2 text-sm text-stone-700">
                     <input
                       type="checkbox"
-                      className="accent-green-800"
+                      className="accent-primary"
                       checked={state === "all"}
                       ref={(el) => {
                         if (el) el.indeterminate = Array.isArray(state);
@@ -149,7 +149,7 @@ export default function BookFilter({ onChange }: BookFilterProps) {
                           <label className="flex cursor-pointer items-center gap-2 text-xs text-stone-600">
                             <input
                               type="checkbox"
-                              className="accent-green-800"
+                              className="accent-primary"
                               checked={state === "all" || (Array.isArray(state) && state.includes(b.id))}
                               onChange={() => toggleBook(c.id, b.id)}
                             />

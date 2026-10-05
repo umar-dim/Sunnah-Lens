@@ -33,6 +33,7 @@ export default function SearchBar({
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
         <Input
           name="q"
+          aria-label="Search query"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
@@ -41,7 +42,7 @@ export default function SearchBar({
         />
       </div>
       <Button type="submit" disabled={isLoading || disabled || !query.trim()}>
-        {isLoading ? "Searching..." : "Search"}
+        {isLoading ? "Searching…" : "Search"}
       </Button>
     </form>
   );

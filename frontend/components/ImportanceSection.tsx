@@ -43,7 +43,7 @@ export default function ImportanceSection() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="flex flex-col items-center rounded-xl border border-border bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-md"
+              className="flex flex-col items-center rounded-xl border border-border bg-white p-6 text-center shadow-sm"
             >
               <feature.icon className="mb-4 h-10 w-10 text-primary" />
               <h3 className="text-lg font-semibold text-stone-800">

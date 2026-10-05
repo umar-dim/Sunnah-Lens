@@ -27,7 +27,8 @@ export default function HadithCard({ hadith }: HadithCardProps) {
         </span>
       </div>
 
-      {hadith.narrator && (
+      {/* Most English texts already open with "Narrated X:"; only add the line when they don't. */}
+      {hadith.narrator && !text.includes(hadith.narrator) && (
         <p className="mb-2 text-sm italic text-stone-500">
           Narrated by {hadith.narrator}
         </p>
@@ -40,6 +41,7 @@ export default function HadithCard({ hadith }: HadithCardProps) {
       {textAr && (
         <p
           dir="rtl"
+          lang="ar"
           className="mt-4 text-lg leading-loose text-stone-600 font-arabic"
         >
           {textAr}

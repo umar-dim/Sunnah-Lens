@@ -394,7 +394,7 @@ export default function DirectoryPage() {
                             Book {book.book_number}: {book.name_en}
                           </h3>
                           {book.name_ar && (
-                            <p dir="rtl" className="mt-0.5 text-sm text-stone-500 font-arabic">
+                            <p dir="rtl" lang="ar" className="mt-0.5 text-sm text-stone-500 font-arabic">
                               {book.name_ar}
                             </p>
                           )}

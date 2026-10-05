@@ -114,7 +114,8 @@ SELECT
 FROM collections c
 LEFT JOIN hadiths h ON h.collection_id = c.id
 GROUP BY c.id, c.name_en, c.name_ar, c.author_en, c.author_ar
-ORDER BY c.name_en
+-- Traditional order of the Kutub al-Sittah; unknown ids sort last.
+ORDER BY array_position(ARRAY['bukhari','muslim','abudawud','tirmidhi','nasai','ibnmajah'], c.id), c.name_en
 """
 
 BOOKS_SQL = """

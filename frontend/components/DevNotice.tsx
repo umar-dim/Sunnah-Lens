@@ -16,7 +16,7 @@ export default function DevNotice() {
         <Badge variant="secondary" className="mb-4 text-xs">
           In Development
         </Badge>
-        <h2 className="text-2xl font-bold tracking-tight text-stone-800">
+        <h2 className="text-2xl font-bold tracking-tight text-primary">
           Browse &amp; Search the Six Books
         </h2>
         <p className="mt-4 text-stone-500 leading-relaxed">
@@ -46,8 +46,8 @@ export default function DevNotice() {
           </li>
         </ul>
         <p className="mt-4 text-stone-500 leading-relaxed">
-          Our goal is to support{" "}
-          <strong>all ~50,000 authenticated hadith</strong> by the end of 2026.
+          SUNNAH LENS supports{" "}
+          <strong>only these six primary books of hadith</strong>.
         </p>
         <p className="mt-4 text-lg font-semibold text-primary">
           Completely free for now.

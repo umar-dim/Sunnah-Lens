@@ -21,7 +21,7 @@ export default function CollectionCard({ collection, onClick }: CollectionCardPr
             {collection.name_en}
           </h3>
           {collection.name_ar && (
-            <p dir="rtl" className="mt-1 text-base text-stone-500 font-arabic">
+            <p dir="rtl" lang="ar" className="mt-1 text-base text-stone-500 font-arabic">
               {collection.name_ar}
             </p>
           )}
