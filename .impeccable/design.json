@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T00:58:05+00:00",
+  "title": "Design System: SUNNAH LENS",
+  "extensions": {
+    "colorMeta": {
+      "masjid-green": {
+        "role": "primary",
+        "displayName": "Masjid Green",
+        "canonical": "oklch(42.5% 0.116 144.3)",
+        "tonalRamp": [
+          "oklch(15% 0.116 144.3)",
+          "oklch(25% 0.116 144.3)",
+          "oklch(35% 0.116 144.3)",
+          "oklch(45% 0.116 144.3)",
+          "oklch(60% 0.116 144.3)",
+          "oklch(75% 0.116 144.3)",
+          "oklch(88% 0.116 144.3)",
+          "oklch(95% 0.116 144.3)"
+        ]
+      },
+      "masjid-green-deep": {
+        "role": "primary",
+        "displayName": "Masjid Green Deep",
+        "tonalRamp": [
+          "oklch(15% 0.095 152.5)",
+          "oklch(25% 0.095 152.5)",
+          "oklch(35% 0.095 152.5)",
+          "oklch(45% 0.095 152.5)",
+          "oklch(60% 0.095 152.5)",
+          "oklch(75% 0.095 152.5)",
+          "oklch(88% 0.095 152.5)",
+          "oklch(95% 0.095 152.5)"
+        ]
+      },
+      "masjid-green-mist": {
+        "role": "primary",
+        "displayName": "Masjid Green Mist",
+        "canonical": "oklch(95.7% 0.021 147.6)"
+      },
+      "focus-green": {
+        "role": "primary",
+        "displayName": "Focus Green"
+      },
+      "vellum": {
+        "role": "neutral",
+        "displayName": "Vellum",
+        "canonical": "oklch(99.4% 0.008 91.5)",
+        "tonalRamp": [
+          "oklch(15% 0.012 85)",
+          "oklch(25% 0.012 85)",
+          "oklch(35% 0.012 85)",
+          "oklch(45% 0.012 85)",
+          "oklch(60% 0.012 85)",
+          "oklch(75% 0.012 85)",
+          "oklch(88% 0.012 85)",
+          "oklch(95% 0.012 85)"
+        ]
+      },
+      "page-white": {
+        "role": "neutral",
+        "displayName": "Page White"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "oklch(21.8% 0 0)"
+      },
+      "binding-thread": {
+        "role": "neutral",
+        "displayName": "Binding Thread",
+        "canonical": "oklch(91% 0.018 78.2)",
+        "tonalRamp": [
+          "oklch(15% 0.018 78.2)",
+          "oklch(25% 0.018 78.2)",
+          "oklch(35% 0.018 78.2)",
+          "oklch(45% 0.018 78.2)",
+          "oklch(60% 0.018 78.2)",
+          "oklch(75% 0.018 78.2)",
+          "oklch(88% 0.018 78.2)",
+          "oklch(95% 0.018 78.2)"
+        ]
+      },
+      "stone-ink": {
+        "role": "neutral",
+        "displayName": "Stone Ink",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(97% 0.001 106.424)"
+        ]
+      },
+      "stone-text": {
+        "role": "neutral",
+        "displayName": "Stone Text"
+      },
+      "stone-muted": {
+        "role": "neutral",
+        "displayName": "Stone Muted"
+      },
+      "stone-faint": {
+        "role": "neutral",
+        "displayName": "Stone Faint"
+      },
+      "stone-rule": {
+        "role": "neutral",
+        "displayName": "Stone Rule"
+      },
+      "stone-hairline": {
+        "role": "neutral",
+        "displayName": "Stone Hairline"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The SUNNAH LENS wordmark in the hero only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section and page headings, in Masjid Green."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles: collection names, feature headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Hadith English text and explanatory prose."
+      },
+      "body-arabic": {
+        "displayName": "Body Arabic",
+        "purpose": "Arabic narration, always RTL, one step larger with loose leading."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Badges, counts, metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "resting",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Cards, inputs, buttons, default badge at rest."
+      },
+      {
+        "name": "reached",
+        "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "purpose": "Hover state of hadith and collection cards only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1) 150ms",
+        "purpose": "Colour, shadow, and 2px lift transitions. The only motion in the system."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one action on a screen: submit search, active nav item, hero CTA.",
+      "html": "<button class=\"ds-btn-primary\">Search</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 8px 20px; border-radius: 8px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4,0,0.2,1), color 150ms cubic-bezier(0.4,0,0.2,1); background: #1B5E20; color: #fff; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-btn-primary:hover { background: oklch(39.3% 0.095 152.535); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px #FFFDF7, 0 0 0 4px oklch(52.7% 0.154 150.069); } .ds-btn-primary:disabled { opacity: 0.5; pointer-events: none; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Inactive navigation items and secondary actions.",
+      "html": "<button class=\"ds-btn-ghost\">Directory</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 8px 20px; border-radius: 8px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4,0,0.2,1), color 150ms cubic-bezier(0.4,0,0.2,1); background: transparent; color: #1B5E20; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-btn-ghost:hover { background: oklch(98.2% 0.018 155.826); } .ds-btn-ghost:focus-visible { outline: none; box-shadow: 0 0 0 2px #FFFDF7, 0 0 0 4px oklch(52.7% 0.154 150.069); }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Search input with leading icon and adjacent submit button.",
+      "html": "<form class=\"ds-search\" onsubmit=\"return false\"><div class=\"ds-search-field\"><span class=\"ds-search-icon\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg></span><input class=\"ds-input-search\" name=\"q\" placeholder=\"Search for a hadith topic...\"></div><button class=\"ds-search-btn\">Search</button></form>",
+      "css": ".ds-search { display: flex; gap: 12px; width: 100%; max-width: 560px; } .ds-search-field { position: relative; flex: 1; } .ds-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: oklch(70.9% 0.01 56.259); display: flex; } .ds-input-search { width: 100%; box-sizing: border-box; height: 40px; padding: 8px 16px 8px 40px; border: 1px solid oklch(86.9% 0.005 56.366); border-radius: 8px; background: #fff; color: oklch(21.6% 0.006 56.043); font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 16px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); transition: box-shadow 150ms; } .ds-input-search::placeholder { color: oklch(70.9% 0.01 56.259); } .ds-input-search:focus-visible { outline: none; box-shadow: 0 0 0 2px #FFFDF7, 0 0 0 4px oklch(52.7% 0.154 150.069); } .ds-search-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 8px 20px; border-radius: 8px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: background-color 150ms cubic-bezier(0.4,0,0.2,1), color 150ms cubic-bezier(0.4,0,0.2,1); background: #1B5E20; color: #fff; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-search-btn:hover { background: oklch(39.3% 0.095 152.535); } .ds-search-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px #FFFDF7, 0 0 0 4px oklch(52.7% 0.154 150.069); }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Sticky translucent bar: caps wordmark left, button-style nav right.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-mark\" href=\"#\">SUNNAH LENS</a><nav class=\"ds-nav-links\"><a class=\"ds-nav-item ds-nav-active\" href=\"#\">Search</a><a class=\"ds-nav-item\" href=\"#\">Directory</a></nav></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 24px; background: rgb(255 253 247 / 0.8); backdrop-filter: blur(4px); border-bottom: 1px solid #E8E0D4; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; } .ds-nav-mark { font-size: 20px; font-weight: 700; letter-spacing: -0.025em; color: #1B5E20; text-decoration: none; } .ds-nav-links { display: flex; gap: 12px; } .ds-nav-item { display: inline-flex; align-items: center; height: 40px; padding: 0 20px; border-radius: 8px; font-size: 14px; font-weight: 500; color: #1B5E20; text-decoration: none; transition: background-color 150ms; } .ds-nav-item:hover { background: oklch(98.2% 0.018 155.826); } .ds-nav-item:focus-visible { outline: none; box-shadow: 0 0 0 2px #FFFDF7, 0 0 0 4px oklch(52.7% 0.154 150.069); } .ds-nav-active, .ds-nav-active:hover { background: #1B5E20; color: #fff; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); }"
+    },
+    {
+      "name": "Attribution Badges",
+      "kind": "chip",
+      "refersTo": "badge-collection",
+      "description": "Collection, book, chapter, and grade badges used on every hadith.",
+      "html": "<div class=\"ds-badges\"><span class=\"ds-badge ds-badge-collection\">Sahih al-Bukhari</span><span class=\"ds-badge ds-badge-book\">Prayers (Salat)</span><span class=\"ds-badge ds-badge-chapter\">Chapter on Wudu</span><span class=\"ds-badge ds-badge-grade\">Sahih</span></div>",
+      "css": ".ds-badges { display: flex; flex-wrap: wrap; gap: 8px; } .ds-badge { display: inline-flex; align-items: center; border-radius: 6px; border: 1px solid transparent; padding: 2px 10px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 600; line-height: 16px; } .ds-badge-collection { background: #1B5E20; color: #fff; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); } .ds-badge-book { background: oklch(97% 0.001 106.424); color: oklch(21.6% 0.006 56.043); } .ds-badge-chapter { border-color: oklch(86.9% 0.005 56.366); color: oklch(37.4% 0.01 67.558); } .ds-badge-grade { background: oklch(96.2% 0.044 156.743); color: #1B5E20; }"
+    },
+    {
+      "name": "Hadith Card",
+      "kind": "card",
+      "refersTo": "card-hadith",
+      "description": "Signature component: attribution first, English then Arabic, grade and match in the footer.",
+      "html": "<article class=\"ds-hadith\"><div class=\"ds-hadith-meta\"><span class=\"ds-hb ds-hb-col\">Sahih al-Bukhari</span><span class=\"ds-hb ds-hb-book\">Revelation</span><span class=\"ds-hadith-num\">#1</span></div><p class=\"ds-hadith-narrator\">Narrated by 'Umar bin Al-Khattab</p><p class=\"ds-hadith-en\">I heard Allah's Messenger (ﷺ) saying, \"The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended.\"</p><p class=\"ds-hadith-ar\" dir=\"rtl\" lang=\"ar\">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى</p><div class=\"ds-hadith-foot\"><span class=\"ds-hb ds-hb-grade\">Sahih</span><span class=\"ds-hadith-match\">87% match</span></div></article>",
+      "css": ".ds-hadith { max-width: 640px; background: #fff; border: 1px solid #E8E0D4; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; transition: box-shadow 150ms; } .ds-hadith:hover { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); } .ds-hadith-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; } .ds-hb { display: inline-flex; align-items: center; border-radius: 6px; border: 1px solid transparent; padding: 2px 10px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 600; line-height: 16px; } .ds-hb-col { background: #1B5E20; color: #fff; } .ds-hb-book { background: oklch(97% 0.001 106.424); color: oklch(21.6% 0.006 56.043); } .ds-hb-grade { background: oklch(96.2% 0.044 156.743); color: #1B5E20; } .ds-hadith-num { margin-left: auto; font-size: 12px; font-weight: 500; color: oklch(70.9% 0.01 56.259); } .ds-hadith-narrator { margin: 0 0 8px; font-size: 14px; font-style: italic; color: oklch(55.3% 0.013 58.071); } .ds-hadith-en { margin: 0; font-size: 16px; line-height: 1.625; color: oklch(26.8% 0.007 34.298); } .ds-hadith-ar { margin: 16px 0 0; font-family: 'Noto Sans Arabic', sans-serif; font-size: 18px; line-height: 2; color: oklch(44.4% 0.011 73.639); } .ds-hadith-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 12px; border-top: 1px solid oklch(97% 0.001 106.424); } .ds-hadith-match { margin-left: auto; font-size: 12px; color: oklch(70.9% 0.01 56.259); }"
+    },
+    {
+      "name": "Collection Card",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Directory entry: English + Arabic name, author, hadith count; lifts 2px on hover.",
+      "html": "<button class=\"ds-collection\"><div class=\"ds-collection-top\"><div><h3 class=\"ds-collection-name\">Sahih al-Bukhari</h3><p class=\"ds-collection-ar\" dir=\"rtl\" lang=\"ar\">صحيح البخاري</p></div><span class=\"ds-collection-icon\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 7v14\"/><path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\"/></svg></span></div><p class=\"ds-collection-author\">Imam Bukhari</p><span class=\"ds-collection-count\">7,252 hadith</span></button>",
+      "css": ".ds-collection { display: block; width: 300px; text-align: left; background: #fff; border: 1px solid #E8E0D4; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; cursor: pointer; transition: all 150ms cubic-bezier(0.4,0,0.2,1); } .ds-collection:hover { border-color: rgb(27 94 32 / 0.3); box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); transform: translateY(-2px); } .ds-collection:focus-visible { outline: none; box-shadow: 0 0 0 2px #FFFDF7, 0 0 0 4px oklch(52.7% 0.154 150.069); } .ds-collection-top { display: flex; justify-content: space-between; align-items: flex-start; } .ds-collection-name { margin: 0; font-size: 18px; font-weight: 600; color: oklch(26.8% 0.007 34.298); transition: color 150ms; } .ds-collection:hover .ds-collection-name, .ds-collection:hover .ds-collection-icon { color: #1B5E20; } .ds-collection-ar { margin: 4px 0 0; font-family: 'Noto Sans Arabic', sans-serif; font-size: 16px; color: oklch(55.3% 0.013 58.071); } .ds-collection-icon { color: oklch(70.9% 0.01 56.259); display: flex; transition: color 150ms; } .ds-collection-author { margin: 12px 0 0; font-size: 14px; color: oklch(55.3% 0.013 58.071); } .ds-collection-count { display: inline-flex; margin-top: 16px; display: inline-flex; align-items: center; border-radius: 6px; border: 1px solid transparent; padding: 2px 10px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 600; line-height: 16px; background: #1B5E20; color: #fff; }"
+    },
+    {
+      "name": "Explainer Callout",
+      "kind": "custom",
+      "refersTo": "callout-explainer",
+      "description": "Mist-tinted note explaining how a search mode works.",
+      "html": "<div class=\"ds-callout\"><p><strong>Free Search</strong> uses AI-powered semantic embeddings to match meaning, not just exact words, across the six books.</p><p class=\"ds-callout-fine\">Looking for an exact word or phrase? Use <a href=\"#\">keyword search in the Directory</a>.</p></div>",
+      "css": ".ds-callout { max-width: 640px; border: 1px solid rgb(27 94 32 / 0.2); background: rgb(232 245 233 / 0.5); border-radius: 8px; padding: 16px; font-family: 'Public Sans', ui-sans-serif, system-ui, sans-serif; font-size: 14px; color: oklch(44.4% 0.011 73.639); } .ds-callout p { margin: 0; } .ds-callout strong { color: #1B5E20; } .ds-callout-fine { margin-top: 4px !important; font-size: 12px; color: oklch(55.3% 0.013 58.071); } .ds-callout a { color: #1B5E20; text-decoration: underline; } .ds-callout a:hover { color: rgb(27 94 32 / 0.8); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Library",
+    "overview": "SUNNAH LENS is a reading room, not a storefront. The ground is warm vellum, the single voice is a deep Masjid Green, and everything between them is a soft range of warm stone greys. The interface stays out of the way so a narration can be read slowly, in both English and Arabic, with its source plainly in view. Nothing competes with the text.\n\nThe mood is calm and reverent. Space is generous. Sections breathe at 80–96px, content sits in a narrow centered column (64rem at most, 48rem for reading), and there is one sticky bar of navigation. Depth is barely there: cards rest on the page with a hairline border and the faintest shadow, and lift slightly only when a hand reaches for them. Motion is limited to colour and shadow transitions. Nothing bounces, slides or announces itself.\n\nComponents are soft and unassuming. Gently rounded corners, thin warm borders and quiet fills let them frame the text without ever becoming the subject.",
+    "keyCharacteristics": [
+      "Warm vellum ground with white reading surfaces on top of it.",
+      "One brand colour, Masjid Green, used for the name, headings, icons, primary actions and attribution.",
+      "Warm stone greys for all secondary text; never cool or blue greys.",
+      "Arabic text set as a full peer of the English: right-to-left, Noto Sans Arabic, extra line height.",
+      "Hairline borders and a whisper of shadow; elevation responds to hover, not to importance."
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "Masjid Green is the only colour with an opinion. Everything else is warm neutral. Never introduce a second accent hue for decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Warm Grey Rule",
+        "body": "Neutrals come from the stone family, which has a warm, slightly brown undertone. Cool greys (`slate`, `gray`, `zinc`) never appear.",
+        "section": "colors"
+      },
+      {
+        "name": "The Equal Scripts Rule",
+        "body": "Arabic is never shrunk, greyed into a footnote or truncated relative to the English. It gets a larger size and looser leading to compensate for script density.",
+        "section": "typography"
+      },
+      {
+        "name": "The Caps Wordmark Rule",
+        "body": "\"SUNNAH LENS\" is always set in capitals, bold, with tight tracking, in Masjid Green. It is the only all-caps text in the system.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hand-Reach Rule",
+        "body": "Elevation is a response to the pointer, never a signal of importance. No surface rests above the Resting shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** use Masjid Green (`--primary`) for every brand-green need. Point new buttons, badges and focus states at the token instead of Tailwind `green-*`.",
+      "**Do** keep warm stone greys for all secondary text, with Stone Muted as the default.",
+      "**Do** set Arabic with `dir=\"rtl\"`, `font-arabic`, one size step above the English and `leading-loose`.",
+      "**Do** lead every hadith with its collection badge and number, so attribution is visible before the text.",
+      "**Do** put reading surfaces on Page White over Vellum, with a 1px Binding Thread border and 12px corners.",
+      "**Do** keep elevation to the two-step Resting → Reached vocabulary, triggered by hover."
+    ],
+    "donts": [
+      "**Don't** introduce a second accent hue, gradients or decorative colour (The One Voice Rule).",
+      "**Don't** use cool greys (`slate`, `gray`, `zinc`) anywhere (The Warm Grey Rule).",
+      "**Don't** shrink, fade or truncate Arabic text relative to the English (The Equal Scripts Rule).",
+      "**Don't** add shadows above the Reached level, glows or floating elements (The Hand-Reach Rule).",
+      "**Don't** use bouncy, sliding or attention-seeking motion. Transitions are colour, shadow and the 2px lift only.",
+      "**Don't** use Tailwind `green-*` utilities. Use the `primary`, `primary-deep`, `primary-light` and `ring` tokens."
+    ]
+  }
+}
