@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUp, ChevronRight, MessageCircleQuestion, RotateCcw, Timer } from "lucide-react";
+import { ArrowUp, ChevronRight, MessageCircleQuestion, RefreshCw, RotateCcw, Timer } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookFilter from "@/components/BookFilter";
@@ -11,6 +11,7 @@ import { honorifics } from "@/components/Honorific";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { streamChat } from "@/lib/api";
+import { SUGGESTED_QUESTIONS } from "@/lib/questions";
 import { cn } from "@/lib/utils";
 import type { BookSelection, ChatMessage, HadithResult } from "@/lib/types";
 
@@ -24,11 +25,15 @@ interface Turn {
   finishedAt?: number; // set when status leaves "streaming"
 }
 
-const EXAMPLES = [
-  "What did the Prophet ﷺ say about anger?",
-  "How should I treat my parents?",
-  "What is the reward for patience?",
-];
+// Three distinct suggestions in random order, never repeating the ones on screen.
+function pickQuestions(exclude: string[] = []): string[] {
+  const pool = SUGGESTED_QUESTIONS.filter((q) => !exclude.includes(q));
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 3);
+}
 
 // Backend limits: 10 messages, 2000 chars each.
 const HISTORY_TURNS = 4;
@@ -195,6 +200,8 @@ export default function ChatPage() {
   const [highlighted, setHighlighted] = useState<string | null>(null);
   const [lastCited, setLastCited] = useState<string | null>(null); // card showing "Back to answer"
   const [now, setNow] = useState(0);
+  // Empty until mount: picking during the server render would mismatch on hydration.
+  const [examples, setExamples] = useState<string[]>([]);
   const abortRef = useRef<AbortController | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const highlightTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -207,6 +214,8 @@ export default function ChatPage() {
     },
     [],
   );
+
+  useEffect(() => setExamples(pickQuestions()), []);
 
   // Stopwatch tick; runs only while an answer is streaming.
   useEffect(() => {
@@ -371,9 +380,23 @@ export default function ChatPage() {
 
           {turns.length === 0 && (
             <div className="mt-6 text-center">
-              <p className="text-sm text-stone-500">Try asking</p>
-              <div className="mt-2 flex flex-wrap justify-center gap-2">
-                {EXAMPLES.map((q) => (
+              <div className="flex items-center justify-center gap-1">
+                <p className="text-sm text-stone-500">Try asking</p>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setExamples((shown) => pickQuestions(shown))}
+                  aria-label="Show different suggested questions"
+                  className="h-8 px-2"
+                >
+                  <RefreshCw className="h-4 w-4" aria-hidden />
+                  Other questions
+                </Button>
+              </div>
+              {/* min-h holds the row's space until the questions are picked after mount. */}
+              <div className="mt-2 flex min-h-20 flex-wrap content-start justify-center gap-2">
+                {examples.map((q) => (
                   <Button key={q} variant="outline" size="sm" disabled={!filter} onClick={() => ask(q)}>
                     {/* One span: Button is a flex row, so a bare honorific span would get its gap. */}
                     <span>{honorifics(q)}</span>
