@@ -93,15 +93,19 @@ export default function BookFilter({ onChange }: BookFilterProps) {
       </summary>
 
       <div className="border-t border-border px-4 py-3">
-        <div className="mb-3 flex gap-3 text-xs">
+        <div className="mb-2 -ml-2 flex gap-1 text-xs">
           <button
             type="button"
-            className="text-primary hover:underline"
+            className="rounded-md px-2 py-2 text-primary hover:bg-primary-light/60"
             onClick={() => update(Object.fromEntries(collections.map((c) => [c.id, "all"])))}
           >
             Select all
           </button>
-          <button type="button" className="text-primary hover:underline" onClick={() => update({})}>
+          <button
+            type="button"
+            className="rounded-md px-2 py-2 text-primary hover:bg-primary-light/60"
+            onClick={() => update({})}
+          >
             Select none
           </button>
         </div>
@@ -118,7 +122,7 @@ export default function BookFilter({ onChange }: BookFilterProps) {
                     onClick={() => toggleExpanded(c.id)}
                     aria-expanded={!!isOpen}
                     aria-label={`Show books in ${c.name_en}`}
-                    className="rounded p-1 text-stone-400 hover:bg-stone-100 hover:text-primary"
+                    className="rounded-md p-2 text-stone-400 hover:bg-stone-100 hover:text-primary"
                   >
                     {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                   </button>

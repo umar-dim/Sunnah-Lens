@@ -8,6 +8,7 @@
   --primary-deep: oklch(39.3% 0.095 152.535);
   --ring: oklch(52.7% 0.154 150.069);
   --border: #E8E0D4;
+  --danger: #B42318;
 }
 
 @theme inline {
@@ -18,6 +19,7 @@
   --color-primary-deep: var(--primary-deep);
   --color-ring: var(--ring);
   --color-border: var(--border);
+  --color-danger: var(--danger);
   --font-sans: var(--font-public-sans), var(--font-noto-sans-arabic);
   --font-arabic: var(--font-noto-sans-arabic);
 }

@@ -73,5 +73,7 @@ _, events = chat([user("What is the capital of France?")])
 off = "".join(d["text"] for e, d in events if e == "delta")
 print("off-corpus:", off[:200])
 assert "paris" not in off.lower(), off
+if off.strip() != "NOT_COVERED":
+    print("note: model did not use the NOT_COVERED reply; the page falls back to plain text")
 
 print("smoke ok")

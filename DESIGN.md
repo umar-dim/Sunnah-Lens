@@ -156,6 +156,8 @@ A single deep green over warm paper. Restraint is the whole palette.
 - **Stone Rule**: the border on inputs and outline badges.
 - **Stone Hairline**: the in-card divider above the grade row, and the secondary badge fill.
 
+- **Danger** (`--danger`, #B42318): error messages only, never decoration. It is a state colour, not a second accent.
+
 ### Named Rules
 **The One Voice Rule.** Masjid Green is the only colour with an opinion. Everything else is warm neutral. Never introduce a second accent hue for decoration.
 
@@ -227,7 +229,7 @@ Quiet and dependable: a solid green fill for the one thing to do, a ghost for ev
 - **Internal Padding:** 24px.
 
 ### Inputs / Fields
-- **Style:** white field, 1px Stone Rule border, 8px radius, 40px tall, resting shadow; Stone Faint placeholder.
+- **Style:** white field, 1px Stone Rule border, 8px radius, 40px tall, resting shadow; Stone Muted placeholder (Stone Faint fails 4.5:1 on white).
 - **Search input:** a 16px search icon sits 12px from the left edge in Stone Faint, with the text indented 40px. The submit button sits beside it with a 12px gap, and its label changes to "Searching…" while loading.
 - **Focus:** a 2px Focus Green ring with a 2px offset; there is no glow.
 - **Disabled:** 50% opacity with a not-allowed cursor.

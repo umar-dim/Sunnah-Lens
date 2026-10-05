@@ -26,7 +26,7 @@ export default function Footer() {
               GitHub
             </a>
           </p>
-          <p className="text-xs text-stone-400">
+          <p className="text-xs text-stone-500">
             &copy; {new Date().getFullYear()} SUNNAH LENS. All rights reserved.
           </p>
         </div>

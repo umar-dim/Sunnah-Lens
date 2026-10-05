@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { honorifics } from "@/components/Honorific";
 import type { TextHadithResult } from "@/lib/types";
 
 interface HadithCardProps {
@@ -35,7 +36,7 @@ export default function HadithCard({ hadith }: HadithCardProps) {
       )}
 
       {text && (
-        <p className="text-base leading-relaxed text-stone-800">{text}</p>
+        <p className="text-base leading-relaxed text-stone-800">{honorifics(text)}</p>
       )}
 
       {textAr && (

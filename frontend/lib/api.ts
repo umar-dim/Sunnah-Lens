@@ -11,6 +11,15 @@ import type {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+// The source data (sunnah.com) writes the Arabic letter ʿayn as a backtick:
+// "Jami` at-Tirmidhi", "Mu`adh". Show it as a typographic ‘ everywhere.
+const ayn = (_key: string, value: unknown) =>
+  typeof value === "string" ? value.replaceAll("`", "\u2018") : value;
+
+async function json<T>(res: Response): Promise<T> {
+  return JSON.parse(await res.text(), ayn);
+}
+
 // --- Free (Vector) Search ---
 
 export async function searchHadith(
@@ -31,7 +40,7 @@ export async function searchHadith(
     throw new Error(`Search failed: ${res.status}`);
   }
 
-  return res.json();
+  return json(res);
 }
 
 // --- Chat (RAG) ---
@@ -77,7 +86,7 @@ export async function streamChat(
       }
       if (!event || !data) continue;
       try {
-        onEvent({ event, data: JSON.parse(data) } as ChatEvent);
+        onEvent({ event, data: JSON.parse(data, ayn) } as ChatEvent);
       } catch {
         // Skip a malformed block; a missing done/error is reported as a cut-off answer.
       }
@@ -103,7 +112,7 @@ export async function searchText(
     throw new Error(`Text search failed: ${res.status}`);
   }
 
-  return res.json();
+  return json(res);
 }
 
 // --- Directory ---
@@ -111,7 +120,7 @@ export async function searchText(
 export async function getCollections(): Promise<DirectoryResponse> {
   const res = await fetch(`${API_URL}/api/collections`);
   if (!res.ok) throw new Error(`Failed to fetch collections: ${res.status}`);
-  return res.json();
+  return json(res);
 }
 
 export async function getBooks(
@@ -121,7 +130,7 @@ export async function getBooks(
     `${API_URL}/api/collections/${collectionId}/books`,
   );
   if (!res.ok) throw new Error(`Failed to fetch books: ${res.status}`);
-  return res.json();
+  return json(res);
 }
 
 export async function getBookHadiths(
@@ -133,5 +142,5 @@ export async function getBookHadiths(
     `${API_URL}/api/books/${bookId}/hadiths?page=${page}&page_size=${pageSize}`,
   );
   if (!res.ok) throw new Error(`Failed to fetch hadiths: ${res.status}`);
-  return res.json();
+  return json(res);
 }
