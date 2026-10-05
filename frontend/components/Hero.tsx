@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { MessageCircleQuestion } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { honorifics } from "@/components/Honorific";
 import { cn } from "@/lib/utils";
 
 export default function Hero() {
@@ -8,21 +10,43 @@ export default function Hero() {
       <h1 className="text-5xl font-bold tracking-tight text-primary sm:text-6xl">
         SUNNAH LENS
       </h1>
-      <p className="mt-4 text-xl text-stone-600">
-        Find hadith by searching for it
+      <p className="mt-4 max-w-2xl text-xl text-stone-600">
+        Ask a question in your own words.{" "}
+        <br className="hidden sm:inline" />
+        Get an answer drawn from authentic hadith.
       </p>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-stone-500">
-        The Sunnah of the Prophet Muhammad ﷺ is the second most important
-        source of guidance in Islam after the Quran. Learning and following the
-        prophetic traditions helps us live our lives in a way that is pleasing to
-        Allah ﷻ, drawing closer to the authentic path laid out for us over 1400
-        years ago. With SUNNAH LENS, you can explore these traditions in an
-        instant — simply describe what you&apos;re looking for, and find the
-        relevant hadith.
+        {honorifics(
+          "The Sunnah of the Prophet Muhammad ﷺ is the second source of guidance in Islam after the Quran. " +
+            "With SUNNAH LENS you can ask about prayer, family, manners or anything in your daily life, " +
+            "and read a short answer taken only from the six books of hadith, with every narration it uses " +
+            "named and one tap away.",
+        )}
       </p>
-      <Link href="/search" className={cn(buttonVariants({ size: "lg" }), "mt-10")}>
-        Start Searching
+      <Link href="/chat" className={cn(buttonVariants({ size: "lg" }), "mt-10")}>
+        <MessageCircleQuestion className="h-5 w-5" aria-hidden />
+        Ask a question
       </Link>
+      <p className="mt-4 text-sm text-stone-500">
+        Prefer to read the hadith yourself?{" "}
+        <Link
+          href="/search"
+          className="font-medium text-primary underline underline-offset-4 hover:text-primary-deep"
+        >
+          Search
+        </Link>{" "}
+        or{" "}
+        <Link
+          href="/directory"
+          className="font-medium text-primary underline underline-offset-4 hover:text-primary-deep"
+        >
+          browse the collections
+        </Link>
+        .
+      </p>
+      <p className="mt-6 max-w-md text-xs text-stone-500">
+        Answers are written by AI from the cited hadith and are not religious rulings.
+      </p>
     </section>
   );
 }

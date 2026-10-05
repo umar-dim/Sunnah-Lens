@@ -1,4 +1,5 @@
 import { BookOpen, Compass, Heart, Users } from "lucide-react";
+import { honorifics } from "@/components/Honorific";
 
 const features = [
   {
@@ -23,7 +24,7 @@ const features = [
     icon: Users,
     title: "Accessible Knowledge",
     description:
-      "Search topics in natural language — no need to memorize book numbers or chapter references.",
+      "Ask in plain words and get an answer from cited hadith — no need to memorize book numbers or chapter references.",
   },
 ];
 
@@ -35,9 +36,10 @@ export default function ImportanceSection() {
           Why Learn the Sunnah?
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-center text-stone-500">
-          The Prophet ﷺ said: &ldquo;I have left among you two things; you will
-          never go astray as long as you hold fast to them: the Book of Allah
-          and my Sunnah.&rdquo;
+          {honorifics(
+            "The Prophet ﷺ said: \u201cI have left among you two things; you will never go astray " +
+              "as long as you hold fast to them: the Book of Allah and my Sunnah.\u201d",
+          )}
         </p>
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
@@ -50,7 +52,7 @@ export default function ImportanceSection() {
                 {feature.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-stone-500">
-                {feature.description}
+                {honorifics(feature.description)}
               </p>
             </div>
           ))}

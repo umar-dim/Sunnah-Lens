@@ -4,7 +4,7 @@ const SIX_BOOKS = [
   "Sahih al-Bukhari",
   "Sahih Muslim*",
   "Sunan Abi Dawud",
-  "Jami` at-Tirmidhi",
+  "Jami‘ at-Tirmidhi",
   "Sunan an-Nasa'i",
   "Sunan Ibn Majah",
 ];
@@ -17,7 +17,7 @@ export default function DevNotice() {
           In Development
         </Badge>
         <h2 className="text-2xl font-bold tracking-tight text-primary">
-          Browse &amp; Search the Six Books
+          Ask, Search &amp; Browse the Six Books
         </h2>
         <p className="mt-4 text-stone-500 leading-relaxed">
           SUNNAH LENS covers the <strong>Kutub al-Sittah</strong>, the six canonical
@@ -32,10 +32,14 @@ export default function DevNotice() {
           * Sahih Muslim includes primary narrations only.
         </p>
         <p className="mt-6 text-stone-500 leading-relaxed">
-          <strong>Browse the directory</strong> by collection and book, and search
-          using two modes — each can be narrowed to the books you choose:
+          <strong>Ask a question</strong>, search, or <strong>browse the directory</strong>{" "}
+          by collection and book. Each can be narrowed to the books you choose:
         </p>
         <ul className="mt-4 space-y-2 text-left text-stone-500 leading-relaxed max-w-md mx-auto">
+          <li>
+            <strong className="text-primary">Ask</strong> — an AI answer drawn only from
+            the hadith it cites, on the Ask page. Not a religious ruling.
+          </li>
           <li>
             <strong className="text-primary">Free Search</strong> — AI-powered
             semantic search using vector embeddings, on the Search page.

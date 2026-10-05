@@ -17,11 +17,11 @@ const notoSansArabic = Noto_Sans_Arabic({
 export const metadata: Metadata = {
   metadataBase: new URL("https://sunnahlens.com"),
   title: {
-    default: "SUNNAH LENS — Search Authentic Hadith",
+    default: "SUNNAH LENS — Ask and Search Authentic Hadith",
     template: "%s | SUNNAH LENS",
   },
   description:
-    "Find hadith by searching for it. A free tool to browse and search the six canonical hadith collections (Kutub al-Sittah) — Bukhari, Muslim, Abu Dawud, Tirmidhi, an-Nasa'i and Ibn Majah — with AI-powered and keyword search.",
+    "Ask a question in your own words and get an answer drawn from cited, authentic hadith. A free tool to ask about, search and browse the six canonical hadith collections (Kutub al-Sittah) — Bukhari, Muslim, Abu Dawud, Tirmidhi, an-Nasa'i and Ibn Majah.",
   keywords: [
     "hadith",
     "sunnah",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://sunnahlens.com",
     siteName: "SUNNAH LENS",
-    title: "SUNNAH LENS — Search Authentic Hadith",
+    title: "SUNNAH LENS — Ask and Search Authentic Hadith",
     description:
-      "Find hadith by searching for it. Powered by vector search on authentic Islamic sources.",
+      "Ask a question in your own words and get an answer drawn from cited, authentic hadith in the six books.",
     images: [
       {
         url: "/opengraph-image.png",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SUNNAH LENS — Search Authentic Hadith",
+    title: "SUNNAH LENS — Ask and Search Authentic Hadith",
     description:
-      "Find hadith by searching for it. Powered by vector search on authentic Islamic sources.",
+      "Ask a question in your own words and get an answer drawn from cited, authentic hadith in the six books.",
     images: ["/opengraph-image.png"],
   },
   robots: {
