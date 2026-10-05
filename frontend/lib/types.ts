@@ -73,3 +73,17 @@ export interface BookHadithsResponse {
   page: number;
   page_size: number;
 }
+
+// --- Chat (RAG) ---
+
+export interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
+// Server-sent events from /api/chat, in order: sources, delta*, then done or error.
+export type ChatEvent =
+  | { event: "sources"; data: { results: HadithResult[] } }
+  | { event: "delta"; data: { text: string } }
+  | { event: "done"; data: Record<string, never> }
+  | { event: "error"; data: { code: "quota" | "upstream"; message: string } };

@@ -1,4 +1,6 @@
-from pydantic import BaseModel, Field
+from typing import Literal
+
+from pydantic import BaseModel, Field, field_validator
 
 
 class FilterFields(BaseModel):
@@ -108,3 +110,21 @@ class BookHadithsResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+# --- Chat (RAG) ---
+
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(..., min_length=1, max_length=2000)
+
+
+class ChatRequest(FilterFields):
+    messages: list[ChatMessage] = Field(..., min_length=1, max_length=10)
+
+    @field_validator("messages")
+    @classmethod
+    def last_is_user(cls, v: list[ChatMessage]) -> list[ChatMessage]:
+        if v[-1].role != "user":
+            raise ValueError("last message must be from the user")
+        return v

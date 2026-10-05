@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "/search", label: "Search" },
   { href: "/directory", label: "Directory" },
+  { href: "/chat", label: "Ask" },
 ];
 
 export default function Navbar() {
@@ -16,7 +17,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="text-lg font-bold tracking-tight text-primary sm:text-xl">
+        <Link href="/" className="whitespace-nowrap text-lg font-bold tracking-tight text-primary sm:text-xl">
           SUNNAH LENS
         </Link>
         <nav className="flex items-center gap-1 sm:gap-3">
@@ -29,7 +30,7 @@ export default function Navbar() {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   buttonVariants({ variant: active ? "default" : "ghost", size: "sm" }),
-                  "sm:h-10 sm:px-5",
+                  "px-2.5 sm:h-10 sm:px-5",
                 )}
               >
                 {label}

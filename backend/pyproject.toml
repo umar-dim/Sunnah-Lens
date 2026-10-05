@@ -10,6 +10,7 @@ dependencies = [
     "uvicorn[standard]",
     "asyncpg",
     "pydantic-settings",
+    "httpx",
 ]
 
 [tool.uv]

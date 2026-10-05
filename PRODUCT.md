@@ -22,7 +22,8 @@ Meaning-based search, deliberately scoped to the six canonical collections (Kutu
 
 - **Free search (`/search`):** semantic search. The user types a natural-language description and gets the closest-matching hadith, ranked by similarity.
 - **Directory (`/directory`):** browse collection → book → hadith, plus English keyword search (stemmed; all words must appear; ranked by relevance) with pagination.
-- **Both searches** can be narrowed with a book filter: any of the six collections, or individual sub-books within them. The default is everything.
+- **Ask (`/chat`):** AI chat grounded in retrieved hadith (RAG). The user asks in plain words; the app retrieves the closest hadith, shows them as source cards, and streams a short answer that only restates those hadith and cites each one as [n]. Multi-turn, held in the browser only (nothing stored). Always labelled AI-generated and not a ruling. Uses its own LLM key, separate from the embedding key.
+- **Both searches** and Ask can be narrowed with a book filter: any of the six collections, or individual sub-books within them. The default is everything.
 
 ## Capabilities and Constraints
 

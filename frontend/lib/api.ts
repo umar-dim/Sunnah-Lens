@@ -2,6 +2,8 @@ import type {
   BookHadithsResponse,
   BookSelection,
   BooksResponse,
+  ChatEvent,
+  ChatMessage,
   DirectoryResponse,
   SearchResponse,
   TextSearchResponse,
@@ -30,6 +32,57 @@ export async function searchHadith(
   }
 
   return res.json();
+}
+
+// --- Chat (RAG) ---
+
+// POST + streamed response, so EventSource can't be used; read the SSE body by hand.
+export async function streamChat(
+  messages: ChatMessage[],
+  filter: BookSelection,
+  onEvent: (e: ChatEvent) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  const res = await fetch(`${API_URL}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages, ...filter }),
+    signal,
+  });
+
+  if (!res.ok || !res.body) {
+    if (res.status === 503) {
+      throw new Error("Ask is unavailable right now. Please use Search instead.");
+    }
+    const detail = (await res.json().catch(() => null))?.detail;
+    if (res.status === 429 && typeof detail === "string") throw new Error(detail);
+    throw new Error("Something went wrong. Please try again.");
+  }
+
+  const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+  let buffer = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) return;
+    buffer += value.replace(/\r\n?/g, "\n");
+    let end;
+    while ((end = buffer.indexOf("\n\n")) >= 0) {
+      const block = buffer.slice(0, end);
+      buffer = buffer.slice(end + 2);
+      let event = "";
+      let data = "";
+      for (const line of block.split("\n")) {
+        if (line.startsWith("event: ")) event = line.slice(7);
+        else if (line.startsWith("data: ")) data = line.slice(6);
+      }
+      if (!event || !data) continue;
+      try {
+        onEvent({ event, data: JSON.parse(data) } as ChatEvent);
+      } catch {
+        // Skip a malformed block; a missing done/error is reported as a cut-off answer.
+      }
+    }
+  }
 }
 
 // --- Text (FTS) Search ---
