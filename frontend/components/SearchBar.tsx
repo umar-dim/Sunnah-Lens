@@ -32,6 +32,7 @@ export default function SearchBar({
       <div className="relative flex-1">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" />
         <Input
+          name="q"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={placeholder}
