@@ -55,7 +55,7 @@ faster (no ~300 ms+ embedding round-trip).
 |---|---|---|
 | Each filter click burns a Gemini call | Med | Task 1 cache + debounce |
 | Out-of-order responses show the wrong filter's results | Med | latest-request-wins guard |
-| Embedding cache memory | Low | 512 × 1536 floats ≈ 6 MB worst case |
+| Embedding cache memory | Low | 512 × 1536 Python floats ≈ 19 MB worst case |
 
 ## Open Questions
 - None. Defaults: 400 ms debounce, reset to page 1.
