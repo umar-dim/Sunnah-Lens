@@ -370,9 +370,9 @@ export default function ChatPage() {
           </div>
 
           {turns.length === 0 && (
-            <div className="mt-6">
+            <div className="mt-6 text-center">
               <p className="text-sm text-stone-500">Try asking</p>
-              <div className="mt-2 flex flex-wrap gap-2">
+              <div className="mt-2 flex flex-wrap justify-center gap-2">
                 {EXAMPLES.map((q) => (
                   <Button key={q} variant="outline" size="sm" disabled={!filter} onClick={() => ask(q)}>
                     {/* One span: Button is a flex row, so a bare honorific span would get its gap. */}
@@ -392,7 +392,7 @@ export default function ChatPage() {
             </div>
           )}
 
-          <div className="mt-4 flex flex-col gap-12">
+          <div className={cn("flex flex-col gap-12", turns.length > 0 && "mt-4")}>
             {turns.map((t, ti) => {
               const live = t.status === "streaming";
               const elapsed = Math.max(0, (t.finishedAt ?? now) - t.startedAt);
@@ -554,7 +554,7 @@ export default function ChatPage() {
               e.preventDefault();
               ask(input);
             }}
-            className="sticky bottom-4 mt-10 flex gap-3 rounded-lg border border-border bg-background/90 p-3 shadow-sm backdrop-blur-sm"
+            className="sticky bottom-4 mt-6 flex gap-3 rounded-lg border border-border bg-background/90 p-3 shadow-sm backdrop-blur-sm"
           >
             <Input
               ref={inputRef}
