@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(psql \"$LOCAL_DATABASE_URL\" *)",
+      "Bash(psql \"$LOCAL\" *)",
+      "Bash(pg_restore -d \"$LOCAL\" *)",
+      "Bash(pg_restore -d \"$LOCAL_DATABASE_URL\" *)",
+      "Bash(pg_restore -l *)"
+    ]
+  }
+}

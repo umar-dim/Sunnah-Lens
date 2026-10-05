@@ -35,3 +35,7 @@ htmlcov/
 
 # Uvicorn
 *.log
+
+# Claude Code: machine-local settings and downloaded impeccable engine
+.claude/settings.local.json
+.claude/skills/impeccable/scripts/bin/
