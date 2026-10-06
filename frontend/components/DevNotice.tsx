@@ -38,7 +38,7 @@ export default function DevNotice() {
         <ul className="mt-4 space-y-2 text-left text-stone-500 leading-relaxed max-w-md mx-auto">
           <li>
             <strong className="text-primary">Ask</strong> — an AI answer drawn only from
-            the hadith it cites, on the Ask page. Not a religious ruling.
+            hadith in the six books, each one cited, on the Ask page. Not a religious ruling.
           </li>
           <li>
             <strong className="text-primary">Free Search</strong> — AI-powered

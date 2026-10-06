@@ -364,6 +364,11 @@ export default function ChatPage() {
               hadith from the six books, and names every one it draws on.
             </p>
             <p className="mt-1 text-sm text-stone-600">
+              Its only source is the hadith in these books. It doesn&apos;t draw on the Quran,
+              tafsir, scholars&apos; opinions or other hadith collections, so if the six books
+              don&apos;t cover your question, it will say so.
+            </p>
+            <p className="mt-1 text-sm text-stone-600">
               Answers are written by AI and can be wrong. They are not religious rulings: read
               the cited hadith, and ask a qualified scholar about rulings. To browse matching
               hadith yourself, use{" "}
