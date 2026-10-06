@@ -58,6 +58,17 @@ app.add_middleware(
 )
 
 
+@app.get("/api/health")
+async def health():
+    pool = await get_pool()
+    try:
+        await pool.fetchval("SELECT 1")
+    except Exception:
+        logger.exception("Health check DB ping failed")
+        raise HTTPException(status_code=503, detail="database unavailable")
+    return {"status": "ok"}
+
+
 # --- Free (Vector) Search ---
 
 @app.post("/api/search", response_model=SearchResponse)
