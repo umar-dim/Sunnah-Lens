@@ -2,7 +2,7 @@
 
     .venv/bin/python scripts/smoke_chat.py [base_url]   # default http://localhost:8000
 
-Validation checks are free. If chat is configured, costs 2 embedding + 3 LLM calls.
+Validation checks are free. If chat is configured, costs 2 embedding + 6 LLM calls (keywords + answer per question).
 """
 import json
 import re

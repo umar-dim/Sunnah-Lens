@@ -120,9 +120,9 @@
   - Files: scratchpad script only (not committed)
   - Scope: S
 
-- [ ] **Checkpoint K-A** — check_chat green; variant chosen; review with you before wiring.
+- [x] **Checkpoint K-A** — check_chat green; variant chosen; review with you before wiring.
 
-- [ ] **K3 — wire into `/api/chat`**
+- [x] **K3 — wire into `/api/chat`**
   - Description: in `app/main.py`, replace `retrieval_query(req.messages)` with the K2 variant built on
     `await extract_keywords(req.messages)`. Log the search string at INFO.
   - Acceptance:

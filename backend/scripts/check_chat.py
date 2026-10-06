@@ -145,6 +145,7 @@ assert pk('Keywords: "anger", patience\n') == "anger, patience"
 assert pk("- anger\n- parents\n* kindness") == "anger, parents, kindness"
 assert pk("1. fasting\n2) travel") == "fasting, travel"
 assert pk("  \n") == ""
+assert pk("<|tool_call_start|>[google(query='fasting')]<|tool_call_end|>") == ""  # junk from free models
 
 # --- extract_keywords: one non-streamed call; any failure falls back to retrieval_query ---
 kw = {"reply": None}  # httpx.Response, or an exception to raise
@@ -170,10 +171,15 @@ body = seen["body"]
 assert b'"temperature":0' in body and b'"stream"' not in body, body
 assert b"anger" in body and b"and with parents?" in body  # whole thread sent, so follow-ups resolve
 
-fallback = chat.retrieval_query(follow_up)
 for reply in (httpx.Response(500, text="boom"), httpx.ReadTimeout("slow"), completion(""), completion(None),
               httpx.Response(200, text="not json")):
     kw["reply"] = reply
-    assert asyncio.run(chat.extract_keywords(follow_up)) == fallback, reply
+    assert asyncio.run(chat.extract_keywords(follow_up)) == "", reply
+
+# --- search_text: latest question + keywords; no keywords → retrieval_query ---
+kw["reply"] = completion("anger, parents")
+assert asyncio.run(chat.search_text(follow_up)) == "and with parents?\nanger, parents"
+kw["reply"] = httpx.Response(500, text="boom")
+assert asyncio.run(chat.search_text(follow_up)) == chat.retrieval_query(follow_up)
 
 print("check ok")

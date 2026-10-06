@@ -52,13 +52,15 @@ def retrieval_query(messages: list[ChatMessage]) -> str:
 
 def parse_keywords(text: str) -> str:
     """One comma-separated line from the model's reply, minus labels, quotes and bullets."""
+    if "<|" in text:  # special/tool-call tokens: openrouter/free sometimes routes to such models
+        return ""
     text = re.sub(r"^\s*(search\s+)?(keywords|query)\s*:", "", text, flags=re.I)
     parts = (re.sub(r"^\d+[.)]\s*", "", p.strip(" \t\"'*-•")) for p in re.split(r"[,\n]", text))
     return ", ".join(p for p in parts if p)
 
 
 async def extract_keywords(messages: list[ChatMessage]) -> str:
-    """Ask the chat model for search keywords; on any failure, fall back to retrieval_query."""
+    """Ask the chat model for search keywords; "" on any failure."""
     s = get_settings()
     # The thread goes in as one transcript, not as chat turns, so the model writes
     # keywords instead of answering the question.
@@ -77,11 +79,20 @@ async def extract_keywords(messages: list[ChatMessage]) -> str:
                 headers={"Authorization": f"Bearer {s.CHAT_API_KEY}"},
             )
             r.raise_for_status()
-            keywords = parse_keywords(r.json()["choices"][0]["message"]["content"] or "")
+            return parse_keywords(r.json()["choices"][0]["message"]["content"] or "")
     except Exception as e:  # never let the keyword step block an answer
         logger.warning("keyword extraction failed, using raw question: %r", e)
-        keywords = ""
-    return keywords or retrieval_query(messages)
+        return ""
+
+
+async def search_text(messages: list[ChatMessage]) -> str:
+    """What to embed: the latest question plus keywords (the question anchors the search
+    when the keywords are poor), or retrieval_query if the keyword step gave nothing."""
+    keywords = await extract_keywords(messages)
+    if not keywords:
+        return retrieval_query(messages)
+    question = next(m.content for m in reversed(messages) if m.role == "user")
+    return f"{question}\n{keywords}"
 
 
 def format_sources(sources: list[dict]) -> str:

@@ -7,7 +7,7 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 
-from app.chat import TOP_K, RateLimiter, retrieval_query, stream_answer
+from app.chat import TOP_K, RateLimiter, search_text, stream_answer
 from app.config import get_settings
 from app.database import close_pool, get_pool
 from app.embedding import embed_query, APIQuotaError
@@ -33,6 +33,8 @@ from app.search import (
     text_search_hadiths,
 )
 
+logging.basicConfig(level=logging.INFO)
+logging.getLogger("httpx").setLevel(logging.WARNING)  # one line per outbound request otherwise
 logger = logging.getLogger(__name__)
 
 
@@ -139,7 +141,9 @@ async def chat(req: ChatRequest, request: Request):
     # Retrieve before opening the stream so errors here are real HTTP statuses.
     pool = await get_pool()
     try:
-        query_embedding = await embed_query(retrieval_query(req.messages))
+        query = await search_text(req.messages)
+        logger.info("chat search: %r", query)
+        query_embedding = await embed_query(query)
     except APIQuotaError as e:
         raise HTTPException(status_code=429, detail=str(e))
     rows = await search_hadiths(pool, query_embedding, TOP_K, req.collection_ids, req.book_ids)
