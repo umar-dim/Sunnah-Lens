@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import re
 import time
 from collections import deque
@@ -16,6 +17,13 @@ from app.models import ChatMessage
 TOP_K = 8
 HISTORY = 6  # most recent messages sent to the LLM
 RETRY_DELAY = 1.5  # seconds before retrying an overloaded (503) provider
+KEYWORD_TIMEOUT = 10  # seconds; past this, search with the raw question instead
+
+logger = logging.getLogger(__name__)
+
+KEYWORD_PROMPT = """Below is a conversation with a user asking about hadith. Turn the user's latest \
+question into search keywords for a hadith database. Resolve follow-ups using the earlier turns so \
+the keywords stand alone. Reply with 3-8 comma-separated English keywords and nothing else."""
 
 SYSTEM_PROMPT = """You are SUNNAH LENS, an assistant that answers questions using ONLY the numbered hadith below, \
 taken from the six canonical collections (Kutub al-Sittah).
@@ -37,10 +45,43 @@ class UpstreamError(Exception):
 
 
 def retrieval_query(messages: list[ChatMessage]) -> str:
-    # ponytail: joins the last two user turns so short follow-ups stay on topic;
-    # add an LLM query-rewrite step if follow-up retrieval proves weak.
+    """Fallback search text: the last two user turns, so short follow-ups stay on topic."""
     users = [m.content for m in messages if m.role == "user"]
     return "\n".join(users[-2:])
+
+
+def parse_keywords(text: str) -> str:
+    """One comma-separated line from the model's reply, minus labels, quotes and bullets."""
+    text = re.sub(r"^\s*(search\s+)?(keywords|query)\s*:", "", text, flags=re.I)
+    parts = (re.sub(r"^\d+[.)]\s*", "", p.strip(" \t\"'*-•")) for p in re.split(r"[,\n]", text))
+    return ", ".join(p for p in parts if p)
+
+
+async def extract_keywords(messages: list[ChatMessage]) -> str:
+    """Ask the chat model for search keywords; on any failure, fall back to retrieval_query."""
+    s = get_settings()
+    # The thread goes in as one transcript, not as chat turns, so the model writes
+    # keywords instead of answering the question.
+    transcript = "\n".join(f"{m.role}: {m.content}" for m in messages[-HISTORY:])
+    body = {
+        "model": s.CHAT_MODEL,
+        "messages": [{"role": "system", "content": KEYWORD_PROMPT},
+                     {"role": "user", "content": transcript}],
+        "temperature": 0,  # same question → same keywords → embed_query cache hit
+    }
+    try:
+        async with httpx.AsyncClient(timeout=KEYWORD_TIMEOUT) as client:
+            r = await client.post(
+                f"{s.CHAT_BASE_URL.rstrip('/')}/chat/completions",
+                json=body,
+                headers={"Authorization": f"Bearer {s.CHAT_API_KEY}"},
+            )
+            r.raise_for_status()
+            keywords = parse_keywords(r.json()["choices"][0]["message"]["content"] or "")
+    except Exception as e:  # never let the keyword step block an answer
+        logger.warning("keyword extraction failed, using raw question: %r", e)
+        keywords = ""
+    return keywords or retrieval_query(messages)
 
 
 def format_sources(sources: list[dict]) -> str:

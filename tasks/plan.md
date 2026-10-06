@@ -121,3 +121,44 @@ This changes how each answer turn reads. It is frontend-only, with no API or pro
 ## Open Questions
 - Are the status messages above OK, or do you want different wording or more of them?
 - Should the stopwatch stop at the end of the answer (planned) or at the first word?
+
+---
+
+# Plan: Keyword query step for Ask retrieval
+
+## Overview
+Today the search embeds the last two user messages as raw text. New flow:
+1. Ask the chat LLM for search keywords, giving it the question plus recent history.
+2. Embed those keywords and search pgvector (top 8, same as now).
+3. Answer exactly as today, using those sources and the original conversation.
+
+## Architecture Decisions
+- **Same provider, non-streamed.** `extract_keywords(messages)` in `app/chat.py` makes one plain
+  `/chat/completions` call to the existing `CHAT_*` endpoint (temperature 0, short timeout ~10s).
+  It needs no new config or dependency.
+- **History goes into the keyword prompt.** The model rewrites follow-ups like "what about fasting?" into
+  standalone keywords. This replaces the `retrieval_query` heuristic (its `ponytail:` comment
+  predicted this upgrade).
+- **Fall back, don't fail.** On timeout, error or empty output, use `retrieval_query(messages)` as today.
+  The keyword step can make retrieval better but must never block an answer.
+- **Still before the stream opens.** Keywords → embed → search all run before `StreamingResponse`,
+  so the HTTP-status contract doesn't change. The cost is one extra LLM round trip before `sources`.
+- **Temperature 0.** The same question gives the same keywords, so the `embed_query` lru_cache still hits.
+- **What gets embedded is decided by measurement, not guessed.** A keyword list may embed worse against
+  `RETRIEVAL_DOCUMENT` vectors than a natural question. Task 2 compares the options before we wire one in.
+
+## Task List
+See tasks/todo.md, section "Keyword query step".
+
+## Risks and Mitigations
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Keywords retrieve worse than the raw question | High | Task 2 measures before wiring; fall back to "question + keywords" |
+| +0.5–2s before sources appear | Med | Status text already covers "searching"; 10s timeout then fallback |
+| 2× LLM calls per question (quota) | Med | Keyword call is tiny (≈50 output tokens); 429 → fallback, not error |
+| Model ignores format (prose, quotes, "Keywords:") | Low | Parser strips labels/quotes/newlines; empty → fallback |
+| Prompt injection via question shapes the search string | Low | The output is only an embedding input, never SQL or shown as instructions |
+
+## Open Questions
+- Show the user what was searched ("Searched for: anger, patience")? Task 4 is optional; say if you want it.
+- Should the keyword model be configurable separately (a cheaper model)? Default: no, reuse `CHAT_MODEL`.

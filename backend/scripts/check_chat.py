@@ -139,4 +139,41 @@ try:
 except httpx.HTTPStatusError as e:
     assert e.response.status_code == 503
 
+# --- parse_keywords: strip labels, quotes, bullets; one comma-separated line ---
+pk = chat.parse_keywords
+assert pk('Keywords: "anger", patience\n') == "anger, patience"
+assert pk("- anger\n- parents\n* kindness") == "anger, parents, kindness"
+assert pk("1. fasting\n2) travel") == "fasting, travel"
+assert pk("  \n") == ""
+
+# --- extract_keywords: one non-streamed call; any failure falls back to retrieval_query ---
+kw = {"reply": None}  # httpx.Response, or an exception to raise
+
+
+def keyword_provider(request: httpx.Request) -> httpx.Response:
+    seen["body"] = request.read()
+    if isinstance(kw["reply"], Exception):
+        raise kw["reply"]
+    return kw["reply"]
+
+
+def completion(content):
+    return httpx.Response(200, json={"choices": [{"message": {"content": content}}]})
+
+
+chat.httpx.AsyncClient = lambda **kw_: _RealClient(transport=httpx.MockTransport(keyword_provider), **kw_)
+follow_up = [msg("user", "anger"), msg("assistant", "Do not be angry [1]."), msg("user", "and with parents?")]
+
+kw["reply"] = completion("Keywords: anger, parents, kindness")
+assert asyncio.run(chat.extract_keywords(follow_up)) == "anger, parents, kindness"
+body = seen["body"]
+assert b'"temperature":0' in body and b'"stream"' not in body, body
+assert b"anger" in body and b"and with parents?" in body  # whole thread sent, so follow-ups resolve
+
+fallback = chat.retrieval_query(follow_up)
+for reply in (httpx.Response(500, text="boom"), httpx.ReadTimeout("slow"), completion(""), completion(None),
+              httpx.Response(200, text="not json")):
+    kw["reply"] = reply
+    assert asyncio.run(chat.extract_keywords(follow_up)) == fallback, reply
+
 print("check ok")

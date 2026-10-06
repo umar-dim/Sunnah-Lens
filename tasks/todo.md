@@ -84,3 +84,56 @@
   Checkpoint B below.
 
 - [ ] **Checkpoint B** — all checks green. You do a manual click-through, then commit.
+
+---
+
+# TODO: Keyword query step (see tasks/plan.md, "Keyword query step")
+
+- [x] **K1 — `extract_keywords` (backend, pure + one I/O call)**
+  - Description: add `KEYWORD_PROMPT` and `extract_keywords(messages) -> str` to `app/chat.py`.
+    It makes a non-streamed `/chat/completions` call (temperature 0, timeout 10s) using the last `HISTORY` messages.
+    A small `parse_keywords(text)` strips labels, quotes and bullets and joins the result into one line.
+    Any exception or empty result → returns `retrieval_query(messages)`.
+  - Acceptance:
+    - A follow-up thread ("anger" → "and with parents?") produces one standalone keyword line.
+    - A provider 500, a timeout, and empty content each return the `retrieval_query` output.
+    - `parse_keywords("Keywords: \"anger\", patience\n")` → `"anger, patience"`.
+  - Verify: `cd backend && .venv/bin/python scripts/check_chat.py`, with new asserts using the existing
+    MockTransport pattern.
+  - Depends on: none
+  - Files: `backend/app/chat.py`, `backend/scripts/check_chat.py`
+  - Scope: S
+
+- [ ] **K2 — measure what to embed (decision gate)**
+  - Description: a throwaway script. For about 10 questions from `frontend/lib/questions.ts` plus 3 follow-up
+    threads, print the top-8 hadith refs and similarities for three variants: (a) the current
+    `retrieval_query`, (b) keywords only, (c) question + keywords. Read the results and pick the variant.
+  - Acceptance: the chosen variant and a one-line reason are recorded here. If (a) wins, stop and rethink.
+  - Verify: run against the local DB (`LOCAL_DATABASE_URL`, read-only is fine).
+  - Depends on: K1
+  - Files: scratchpad script only (not committed)
+  - Scope: S
+
+- [ ] **Checkpoint K-A** — check_chat green; variant chosen; review with you before wiring.
+
+- [ ] **K3 — wire into `/api/chat`**
+  - Description: in `app/main.py`, replace `retrieval_query(req.messages)` with the K2 variant built on
+    `await extract_keywords(req.messages)`. Log the search string at INFO.
+  - Acceptance:
+    - The order is still: errors before the stream (422/429/503), then `sources` → `delta`* → `done|error`.
+    - With the `CHAT_*` provider down, chat still retrieves (fallback) and reports the upstream error as an event.
+  - Verify: `scripts/check_chat.py` green; `scripts/smoke_chat.py` against `python -m uvicorn` on :8000;
+    a manual follow-up question in /chat returns on-topic sources.
+  - Depends on: K2
+  - Files: `backend/app/main.py`, `backend/scripts/smoke_chat.py` (update the cost note: +1 LLM call per question)
+  - Scope: S
+
+- [ ] **K4 — (optional) show the search terms**
+  - Description: add `query` to the `sources` event; the sources panel shows "Searched for: …".
+  - Acceptance: the text renders, wraps at 375px, and doesn't appear for old events without `query`.
+  - Verify: `npm run lint && npx tsc --noEmit && npm run build`; browser check with chrome-devtools.
+  - Depends on: K3
+  - Files: `backend/app/main.py`, `frontend/lib/types.ts`, `frontend/app/chat/page.tsx`
+  - Scope: S
+
+- [ ] **Checkpoint K-B** — all checks green; manual click-through (new question + follow-up); commit.
