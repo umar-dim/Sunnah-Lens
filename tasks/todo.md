@@ -104,11 +104,17 @@
   - Files: `backend/app/chat.py`, `backend/scripts/check_chat.py`
   - Scope: S
 
-- [ ] **K2 — measure what to embed (decision gate)**
+- [x] **K2 — measure what to embed (decision gate)**
   - Description: a throwaway script. For about 10 questions from `frontend/lib/questions.ts` plus 3 follow-up
     threads, print the top-8 hadith refs and similarities for three variants: (a) the current
     `retrieval_query`, (b) keywords only, (c) question + keywords. Read the results and pick the variant.
   - Acceptance: the chosen variant and a one-line reason are recorded here. If (a) wins, stop and rethink.
+  - **Result (2026-10-06): (c) question + keywords.** Best or tied on 12/13 cases. It's clearly better than (a) on
+    follow-ups ("anger" → "with parents?" pulls parent hadith, not general anger) and on vague
+    questions ("anything about dogs", "brother insulting me"). (b) keywords-only is unsafe: `CHAT_MODEL=openrouter/free`
+    sometimes answers with junk ("User Safety: safe", `<|tool_call_start|>…`), and on its own that retrieved
+    "This Hadith is Hasan Sahih" stubs. In (c) the question anchors the search, so junk only slightly dilutes it.
+    K3 also: treat replies containing `<|` as empty (fallback).
   - Verify: run against the local DB (`LOCAL_DATABASE_URL`, read-only is fine).
   - Depends on: K1
   - Files: scratchpad script only (not committed)
