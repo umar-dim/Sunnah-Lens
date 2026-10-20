@@ -84,26 +84,26 @@ export default function BookFilter({ onChange }: BookFilterProps) {
   if (collections.length === 0) return null;
 
   return (
-    <details className="group rounded-lg border border-border bg-white">
-      <summary className="flex cursor-pointer list-none items-center [&::-webkit-details-marker]:hidden gap-2 px-4 py-3 text-sm text-stone-600">
+    <details className="group rounded-md border border-border bg-surface">
+      <summary className="flex cursor-pointer list-none items-center [&::-webkit-details-marker]:hidden gap-2 px-4 py-3 text-sm text-ink-muted">
         <SlidersHorizontal className="h-4 w-4 text-primary" />
         <span className="font-medium">Filter books</span>
-        <span className="text-stone-400">· {summary}</span>
-        <ChevronDown className="ml-auto h-4 w-4 text-stone-400 transition-transform group-open:rotate-180" />
+        <span className="text-ink-subtle">· {summary}</span>
+        <ChevronDown className="ml-auto h-4 w-4 text-ink-subtle transition-transform group-open:rotate-180" />
       </summary>
 
       <div className="border-t border-border px-4 py-3">
         <div className="mb-2 -ml-2 flex gap-1 text-xs">
           <button
             type="button"
-            className="rounded-md px-2 py-2 text-primary hover:bg-primary-light/60"
+            className="rounded-sm px-2 py-2 text-primary hover:bg-primary-light/60"
             onClick={() => update(Object.fromEntries(collections.map((c) => [c.id, "all"])))}
           >
             Select all
           </button>
           <button
             type="button"
-            className="rounded-md px-2 py-2 text-primary hover:bg-primary-light/60"
+            className="rounded-sm px-2 py-2 text-primary hover:bg-primary-light/60"
             onClick={() => update({})}
           >
             Select none
@@ -122,11 +122,11 @@ export default function BookFilter({ onChange }: BookFilterProps) {
                     onClick={() => toggleExpanded(c.id)}
                     aria-expanded={!!isOpen}
                     aria-label={`Show books in ${c.name_en}`}
-                    className="rounded-md p-2 text-stone-400 hover:bg-stone-100 hover:text-primary"
+                    className="rounded-sm p-2 text-ink-subtle hover:bg-surface-sunken hover:text-primary"
                   >
                     {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                   </button>
-                  <label className="flex flex-1 cursor-pointer items-center gap-2 text-sm text-stone-700">
+                  <label className="flex flex-1 cursor-pointer items-center gap-2 text-sm text-ink-muted">
                     <input
                       type="checkbox"
                       className="accent-primary"
@@ -137,20 +137,20 @@ export default function BookFilter({ onChange }: BookFilterProps) {
                       onChange={() => toggleCollection(c.id)}
                     />
                     {c.name_en}
-                    <span className="text-xs text-stone-400">
+                    <span className="text-xs text-ink-subtle">
                       {c.hadith_count.toLocaleString()}
                     </span>
                   </label>
                 </div>
 
                 {isOpen && (
-                  <ul className="ml-9 mt-1 flex max-h-60 flex-col gap-1 overflow-y-auto border-l border-stone-100 pl-3">
+                  <ul className="ml-9 mt-1 flex max-h-60 flex-col gap-1 overflow-y-auto border-l border-border pl-3">
                     {!books[c.id] ? (
-                      <li className="text-xs text-stone-400">Loading…</li>
+                      <li className="text-xs text-ink-subtle">Loading…</li>
                     ) : (
                       books[c.id].map((b) => (
                         <li key={b.id}>
-                          <label className="flex cursor-pointer items-center gap-2 text-xs text-stone-600">
+                          <label className="flex cursor-pointer items-center gap-2 text-xs text-ink-muted">
                             <input
                               type="checkbox"
                               className="accent-primary"

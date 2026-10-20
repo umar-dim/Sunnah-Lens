@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Logo from "@/components/Logo";
 
 const links = [
   { href: "/search", label: "Search" },
@@ -16,9 +17,9 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="whitespace-nowrap text-lg font-bold tracking-tight text-primary sm:text-xl">
-          SUNNAH LENS
+      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-4 sm:px-6">
+        <Link href="/" aria-label="SunnahLens home" className="whitespace-nowrap rounded-sm">
+          <Logo size={32} />
         </Link>
         <nav className="flex items-center gap-1 sm:gap-3">
           {links.map(({ href, label }) => {
@@ -30,7 +31,7 @@ export default function Navbar() {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   buttonVariants({ variant: active ? "default" : "ghost", size: "sm" }),
-                  "px-2.5 sm:h-10 sm:px-5",
+                  "px-3 sm:px-5",
                 )}
               >
                 {label}

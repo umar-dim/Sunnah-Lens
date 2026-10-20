@@ -1,35 +1,83 @@
 @import "tailwindcss";
+@import "./tokens.css";
 
-:root {
-  --background: #FFFDF7;
-  --foreground: #1A1A1A;
-  --primary: #1B5E20;
-  --primary-light: #E8F5E9;
-  --primary-deep: oklch(39.3% 0.095 152.535);
-  --ring: oklch(52.7% 0.154 150.069);
-  --border: #E8E0D4;
-  --danger: #B42318;
+/* Map the SunnahLens tokens (tokens.css) onto Tailwind utilities. */
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-hover);
+  --color-primary-light: color-mix(in oklab, var(--primary) 10%, var(--surface));
+  --color-on-primary: var(--on-primary);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ring: var(--focus);
+  --color-danger: var(--grade-mawdu);
+  --color-danger-soft: var(--grade-mawdu-bg);
+  --color-grade-sahih: var(--grade-sahih);
+  --color-grade-sahih-bg: var(--grade-sahih-bg);
+  --color-grade-hasan: var(--grade-hasan);
+  --color-grade-hasan-bg: var(--grade-hasan-bg);
+  --color-grade-daif: var(--grade-daif);
+  --color-grade-daif-bg: var(--grade-daif-bg);
+  --color-grade-mawdu: var(--grade-mawdu);
+  --color-grade-mawdu-bg: var(--grade-mawdu-bg);
+  --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
+  --font-display: var(--font-dm-serif), Georgia, serif;
+  --font-arabic: var(--font-amiri), "Noto Naskh Arabic", serif;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-card-sl: var(--shadow-card);
+  --shadow-raised-sl: var(--shadow-raised);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light);
-  --color-primary-deep: var(--primary-deep);
-  --color-ring: var(--ring);
-  --color-border: var(--border);
-  --color-danger: var(--danger);
-  --font-sans: var(--font-public-sans), var(--font-noto-sans-arabic);
-  --font-arabic: var(--font-noto-sans-arabic);
+/* tokens.css names the families with literal strings; point them at next/font. */
+:root {
+  --font-display: var(--font-dm-serif), Georgia, serif;
+  --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
+  --font-arabic: var(--font-amiri), "Noto Naskh Arabic", serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+:where(h1, h2) {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline-color: var(--focus);
 }
 
 ::selection {
-  background: var(--primary-light);
-  color: var(--primary);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* Star Lens mark: green ring and core, gold star; ivory and light gold in dark. */
+.sl-mark { --mark-ink: var(--brand-green); --mark-gold: var(--brand-gold); --mark-core: var(--brand-green); }
+[data-theme="dark"] .sl-mark { --mark-ink: var(--brand-ivory); --mark-gold: var(--brand-gold-light); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sl-mark { --mark-ink: var(--brand-ivory); --mark-gold: var(--brand-gold-light); }
+}
+.sl-logo-word { color: var(--mark-ink, var(--brand-green)); }
+.sl-logo-lens { color: var(--brand-gold); }
+[data-theme="dark"] .sl-logo-word { color: var(--brand-ivory); }
+[data-theme="dark"] .sl-logo-lens { color: var(--brand-gold-light); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sl-logo-word { color: var(--brand-ivory); }
+  :root:not([data-theme="light"]) .sl-logo-lens { color: var(--brand-gold-light); }
 }

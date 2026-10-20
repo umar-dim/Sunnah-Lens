@@ -117,7 +117,7 @@ function Inline({ text, sources, turn, expanded, onCite }: CiteProps & { text: s
               aria-controls={`t${turn}-sources`}
               aria-expanded={expanded}
               aria-label={`Source: ${sourceLabel(sources[n - 1])}, show hadith`}
-              className="ml-1 rounded-md bg-primary-light px-1.5 py-0.5 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="ml-1 rounded-sm bg-primary-light px-1.5 py-0.5 text-xs font-semibold text-primary transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               {sourceLabel(sources[n - 1])}
             </button>
@@ -142,7 +142,7 @@ function Answer({ text, ...cite }: CiteProps & { text: string }) {
     else blocks.push(bullet ? [bullet[1]] : line);
   }
   return (
-    <div className="flex flex-col gap-3 text-base leading-relaxed text-stone-800">
+    <div className="flex flex-col gap-3 text-base leading-relaxed text-ink">
       {blocks.map((b, i) =>
         Array.isArray(b) ? (
           <ul key={i} className="ml-5 list-disc space-y-1">
@@ -164,9 +164,9 @@ function Answer({ text, ...cite }: CiteProps & { text: string }) {
 
 function NotCovered({ onRephrase }: { onRephrase: () => void }) {
   return (
-    <div className="text-base leading-relaxed text-stone-800">
+    <div className="text-base leading-relaxed text-ink">
       <p>We couldn&apos;t find a hadith in the six books that answers this directly.</p>
-      <ul className="mt-3 flex flex-col gap-1.5 text-sm text-stone-600">
+      <ul className="mt-3 flex flex-col gap-1.5 text-sm text-ink-muted">
         <li>
           <button
             type="button"
@@ -350,25 +350,25 @@ export default function ChatPage() {
       <main className="flex-1">
         <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-primary">
+            <h1 className="text-3xl sm:text-4xl text-ink">
               Ask about the Sunnah
             </h1>
-            <p className="mt-2 text-stone-500">
+            <p className="mt-2 text-ink-subtle">
               Ask in your own words. Answers are drawn only from cited hadith.
             </p>
           </div>
 
-          <div className="mb-6 rounded-lg border border-primary/20 bg-primary-light/50 p-4">
-            <p className="text-sm text-stone-600">
+          <div className="mb-6 rounded-md border border-primary/20 bg-primary-light/50 p-4">
+            <p className="text-sm text-ink-muted">
               <strong className="text-primary">Ask</strong> answers in a few sentences, using only
               hadith from the six books, and names every one it draws on.
             </p>
-            <p className="mt-1 text-sm text-stone-600">
+            <p className="mt-1 text-sm text-ink-muted">
               Its only source is the hadith in these books. It doesn&apos;t draw on the Quran,
               tafsir, scholars&apos; opinions or other hadith collections, so if the six books
               don&apos;t cover your question, it will say so.
             </p>
-            <p className="mt-1 text-sm text-stone-600">
+            <p className="mt-1 text-sm text-ink-muted">
               Answers are written by AI and can be wrong. They are not religious rulings: read
               the cited hadith, and ask a qualified scholar about rulings. To browse matching
               hadith yourself, use{" "}
@@ -386,7 +386,7 @@ export default function ChatPage() {
           {turns.length === 0 && (
             <div className="mt-6 text-center">
               <div className="flex items-center justify-center gap-1">
-                <p className="text-sm text-stone-500">Try asking</p>
+                <p className="text-sm text-ink-subtle">Try asking</p>
                 <Button
                   type="button"
                   variant="ghost"
@@ -444,7 +444,7 @@ export default function ChatPage() {
                   aria-label={`Question ${ti + 1}`}
                   className="flex scroll-mt-20 flex-col gap-4"
                 >
-                  <h2 className="flex items-start gap-2 text-lg font-semibold text-stone-800">
+                  <h2 className="flex items-start gap-2 text-xl text-ink">
                     <MessageCircleQuestion className="mt-1 h-5 w-5 shrink-0 text-primary" aria-hidden />
                     <span>{honorifics(t.question)}</span>
                   </h2>
@@ -454,17 +454,17 @@ export default function ChatPage() {
                       id={`t${ti}-sources`}
                       open={openSources.has(ti)}
                       onToggle={(e) => toggleSources(ti, e.currentTarget.open)}
-                      className="group rounded-xl border border-border bg-white/60"
+                      className="group rounded-lg border border-border bg-surface/60"
                     >
-                      <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1.5 rounded-xl px-4 py-3 text-sm text-stone-600 transition-colors hover:text-primary [&::-webkit-details-marker]:hidden">
+                      <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1.5 rounded-lg px-4 py-3 text-sm text-ink-muted transition-colors hover:text-primary [&::-webkit-details-marker]:hidden">
                         <ChevronRight className="h-4 w-4 shrink-0 text-primary group-open:rotate-90" aria-hidden />
                         {cited.length > 0 ? (
                           <>
-                            <span className="font-medium text-stone-700">Sources</span>
+                            <span className="font-medium text-ink-muted">Sources</span>
                             {cited.slice(0, 2).map((n) => (
                               <span
                                 key={n}
-                                className="rounded-md bg-primary-light px-1.5 py-0.5 text-xs font-semibold text-primary"
+                                className="rounded-sm bg-primary-light px-1.5 py-0.5 text-xs font-semibold text-primary"
                               >
                                 {sourceLabel(sources[n - 1])}
                               </span>
@@ -472,12 +472,12 @@ export default function ChatPage() {
                             {cited.length > 2 && (
                               <span className="text-xs font-semibold text-primary">+{cited.length - 2}</span>
                             )}
-                            <span className="ml-auto text-xs text-stone-500">
+                            <span className="ml-auto text-xs text-ink-subtle">
                               {cited.length} cited of {sources.length} found
                             </span>
                           </>
                         ) : (
-                          <span className="font-medium text-stone-700">
+                          <span className="font-medium text-ink-muted">
                             {live
                               ? `${sources.length} hadith found`
                               : `${sources.length} hadith searched, none cited`}
@@ -487,7 +487,7 @@ export default function ChatPage() {
                       <div className="flex flex-col gap-6 px-4 pb-4 pt-1">
                         {groups.map((g) => (
                           <div key={g.title} className="flex flex-col gap-4">
-                            <h3 className="text-xs font-semibold text-stone-500">{g.title}</h3>
+                            <h3 className="text-xs font-semibold text-ink-subtle">{g.title}</h3>
                             {g.items.map((n) => {
                               const id = `t${ti}-s${n}`;
                               const h = sources[n - 1];
@@ -498,7 +498,7 @@ export default function ChatPage() {
                                   tabIndex={-1}
                                   aria-label={sourceLabel(h)}
                                   className={cn(
-                                    "-m-2 rounded-2xl p-2 outline-none transition-colors duration-700",
+                                    "-m-2 rounded-lg p-2 outline-none transition-colors duration-700",
                                     highlighted === id && "bg-primary-light",
                                   )}
                                 >
@@ -506,7 +506,7 @@ export default function ChatPage() {
                                     <button
                                       type="button"
                                       onClick={() => backToAnswer(ti)}
-                                      className="mb-2 inline-flex items-center gap-1 rounded-md px-2 py-1.5 text-sm font-medium text-primary hover:bg-primary-light/60"
+                                      className="mb-2 inline-flex items-center gap-1 rounded-sm px-2 py-1.5 text-sm font-medium text-primary hover:bg-primary-light/60"
                                     >
                                       <ArrowUp className="h-4 w-4" aria-hidden />
                                       Back to answer
@@ -523,19 +523,19 @@ export default function ChatPage() {
                     </details>
                   )}
                   {t.sources && t.sources.length === 0 && (
-                    <p className="text-sm text-stone-500">No hadith matched in the selected books.</p>
+                    <p className="text-sm text-ink-subtle">No hadith matched in the selected books.</p>
                   )}
 
                   <div
                     id={`t${ti}-answer`}
                     tabIndex={-1}
-                    className="scroll-mt-20 rounded-xl border border-border bg-white p-6 shadow-sm outline-none"
+                    className="scroll-mt-20 rounded-lg border border-border bg-surface p-6 shadow-card-sl outline-none"
                   >
-                    <div className="mb-3 flex items-start justify-between gap-3 text-sm text-stone-500">
+                    <div className="mb-3 flex items-start justify-between gap-3 text-sm text-ink-subtle">
                       <span role="status">
                         {live && !visibleAnswer ? honorifics(statusLine(t, elapsed)) : "Answer"}
                       </span>
-                      <span className="flex shrink-0 items-center gap-1 tabular-nums text-stone-500">
+                      <span className="flex shrink-0 items-center gap-1 tabular-nums text-ink-subtle">
                         <Timer className="h-4 w-4" aria-hidden />
                         {t.finishedAt === undefined
                           ? clock(elapsed)
@@ -559,7 +559,7 @@ export default function ChatPage() {
                       )}
                       {(t.status === "error" || t.status === "stopped") && (
                         <div className={cn("flex flex-wrap items-center gap-3", visibleAnswer && "mt-4")}>
-                          <p className={cn("text-sm", t.status === "error" ? "text-danger" : "text-stone-500")}>
+                          <p className={cn("text-sm", t.status === "error" ? "text-danger" : "text-ink-subtle")}>
                             {t.status === "error" ? t.error : "You stopped this answer."}
                           </p>
                           {ti === turns.length - 1 && (
@@ -582,7 +582,7 @@ export default function ChatPage() {
               e.preventDefault();
               ask(input);
             }}
-            className="sticky bottom-4 mt-6 flex gap-3 rounded-lg border border-border bg-background/90 p-3 shadow-sm backdrop-blur-sm"
+            className="sticky bottom-4 mt-6 flex gap-3 rounded-md border border-border bg-background/90 p-3 shadow-card-sl backdrop-blur-sm"
           >
             <Input
               ref={inputRef}
@@ -603,7 +603,7 @@ export default function ChatPage() {
               </Button>
             )}
           </form>
-          <p className="mt-2 text-center text-xs text-stone-500">
+          <p className="mt-2 text-center text-xs text-ink-subtle">
             {filter
               ? "Conversations aren't saved. Refreshing the page clears them."
               : "Select at least one book to ask a question."}

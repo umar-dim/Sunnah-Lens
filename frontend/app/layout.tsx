@@ -1,24 +1,33 @@
 import type { Metadata } from "next";
-import { Public_Sans, Noto_Sans_Arabic } from "next/font/google";
+import { Amiri, DM_Serif_Display, Manrope } from "next/font/google";
 import "./globals.css";
 
-const publicSans = Public_Sans({
-  variable: "--font-public-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
-const notoSansArabic = Noto_Sans_Arabic({
-  variable: "--font-noto-sans-arabic",
+const dmSerif = DM_Serif_Display({
+  variable: "--font-dm-serif",
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+});
+
+const amiri = Amiri({
+  variable: "--font-amiri",
   subsets: ["arabic"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sunnahlens.com"),
   title: {
-    default: "SUNNAH LENS — Ask and Search Authentic Hadith",
-    template: "%s | SUNNAH LENS",
+    default: "SunnahLens — Ask and Search Authentic Hadith",
+    template: "%s | SunnahLens",
   },
   description:
     "Ask a question in your own words and get an answer drawn from cited, authentic hadith. A free tool to ask about, search and browse the six canonical hadith collections (Kutub al-Sittah) — Bukhari, Muslim, Abu Dawud, Tirmidhi, an-Nasa'i and Ibn Majah.",
@@ -38,14 +47,14 @@ export const metadata: Metadata = {
     "search hadith",
     "authentic hadith",
   ],
-  authors: [{ name: "SUNNAH LENS" }],
-  creator: "SUNNAH LENS",
+  authors: [{ name: "SunnahLens" }],
+  creator: "SunnahLens",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://sunnahlens.com",
-    siteName: "SUNNAH LENS",
-    title: "SUNNAH LENS — Ask and Search Authentic Hadith",
+    siteName: "SunnahLens",
+    title: "SunnahLens — Ask and Search Authentic Hadith",
     description:
       "Ask a question in your own words and get an answer drawn from cited, authentic hadith in the six books.",
     images: [
@@ -53,13 +62,13 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "SUNNAH LENS",
+        alt: "SunnahLens",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SUNNAH LENS — Ask and Search Authentic Hadith",
+    title: "SunnahLens — Ask and Search Authentic Hadith",
     description:
       "Ask a question in your own words and get an answer drawn from cited, authentic hadith in the six books.",
     images: ["/opengraph-image.png"],
@@ -69,7 +78,6 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
 };
@@ -78,7 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${publicSans.variable} ${notoSansArabic.variable} h-full antialiased`}
+      className={`${manrope.variable} ${dmSerif.variable} ${amiri.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

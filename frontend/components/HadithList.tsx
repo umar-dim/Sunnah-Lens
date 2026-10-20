@@ -21,7 +21,7 @@ export default function HadithList({
     return (
       <div className="flex flex-col gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-border bg-white p-6">
+          <div key={i} className="rounded-lg border border-border bg-surface p-6">
             <div className="flex gap-2 mb-3">
               <Skeleton className="h-5 w-20" />
               <Skeleton className="h-5 w-28" />
@@ -39,13 +39,13 @@ export default function HadithList({
   if (error) {
     const isQuotaError = error === "API_QUOTA_EXHAUSTED";
     return (
-      <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
-        <p className="text-sm text-red-600">
+      <div className="rounded-lg border border-danger/30 bg-danger-soft p-6 text-center">
+        <p className="text-sm text-danger">
           {isQuotaError
             ? "Search is temporarily unavailable due to API limits."
             : "Something went wrong. Please try again."}
         </p>
-        <p className="mt-1 text-xs text-red-400">
+        <p className="mt-1 text-xs text-danger">
           {isQuotaError
             ? "Please try again later or use keyword search in the Directory."
             : error}
@@ -56,8 +56,8 @@ export default function HadithList({
 
   if (hasSearched && results.length === 0) {
     return (
-      <div className="rounded-xl border border-border bg-white p-10 text-center">
-        <p className="text-stone-500">
+      <div className="rounded-lg border border-border bg-surface p-10 text-center">
+        <p className="text-ink-subtle">
           No hadith found for your query. Try different keywords.
         </p>
       </div>
@@ -66,8 +66,8 @@ export default function HadithList({
 
   if (!hasSearched) {
     return (
-      <div className="rounded-xl border border-dashed border-border bg-white/50 p-10 text-center">
-        <p className="text-lg text-stone-400">
+      <div className="rounded-lg border border-dashed border-border bg-surface/50 p-10 text-center">
+        <p className="text-lg text-ink-subtle">
           Search for any Islamic topic to find relevant hadith
         </p>
       </div>

@@ -1,11 +1,11 @@
+import Logo from "@/components/Logo";
+
 export default function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto max-w-5xl px-6 py-8">
-        <div className="flex flex-col items-center gap-4 text-center text-sm text-stone-500">
-          <div className="font-semibold tracking-tight text-primary">
-            SUNNAH LENS
-          </div>
+        <div className="flex flex-col items-center gap-4 text-center text-sm text-ink-subtle">
+          <Logo size={28} />
           <p>
             Data extracted from{" "}
             <a
@@ -26,8 +26,8 @@ export default function Footer() {
               GitHub
             </a>
           </p>
-          <p className="text-xs text-stone-500">
-            &copy; {new Date().getFullYear()} SUNNAH LENS. All rights reserved.
+          <p className="text-xs text-ink-subtle">
+            &copy; {new Date().getFullYear()} SunnahLens. All rights reserved.
           </p>
         </div>
       </div>

@@ -221,22 +221,22 @@ export default function DirectoryPage() {
         <div className="mx-auto max-w-5xl px-6 py-12">
           {/* Header */}
           <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-primary">
+            <h1 className="text-3xl sm:text-4xl text-ink">
               Browse &amp; Search the Six Books
             </h1>
-            <p className="mt-2 text-stone-500">
+            <p className="mt-2 text-ink-subtle">
               Explore the Kutub al-Sittah, the six canonical hadith collections
             </p>
           </div>
 
           {/* Keyword Search */}
           <section className="mx-auto mb-10 max-w-3xl">
-            <div className="mb-4 rounded-lg border border-primary/20 bg-primary-light/50 p-4 text-sm text-stone-600">
+            <div className="mb-4 rounded-md border border-primary/20 bg-primary-light/50 p-4 text-sm text-ink-muted">
               <p>
                 <strong className="text-primary">Keyword search</strong> finds hadith
                 whose English text contains your words.
               </p>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-stone-500">
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-ink-subtle">
                 <li>Every word you enter must appear; results are ranked by relevance.</li>
                 <li>Words are matched by their root, so &ldquo;fast&rdquo; also finds &ldquo;fasting&rdquo;.</li>
                 <li>Arabic text is not searched yet. For meaning-based results, try{" "}
@@ -259,7 +259,7 @@ export default function DirectoryPage() {
           {searchQuery ? (
             <section>
               <div className="mb-4 flex items-center justify-between gap-4">
-                <p className="text-sm text-stone-500">
+                <p className="text-sm text-ink-subtle">
                   {!filter
                     ? <>Select at least one book to search for &ldquo;{searchQuery}&rdquo;</>
                     : searchLoading
@@ -273,13 +273,13 @@ export default function DirectoryPage() {
               </div>
 
               {!filter ? null : searchError ? (
-                <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
-                  <p className="text-sm text-red-600">{searchError}</p>
+                <div className="rounded-lg border border-danger/30 bg-danger-soft p-6 text-center">
+                  <p className="text-sm text-danger">{searchError}</p>
                 </div>
               ) : searchLoading ? (
                 <div className="flex flex-col gap-4">
                   {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="rounded-xl border border-border bg-white p-6">
+                    <div key={i} className="rounded-lg border border-border bg-surface p-6">
                       <Skeleton className="h-5 w-1/3 mb-3" />
                       <Skeleton className="h-4 w-full mb-2" />
                       <Skeleton className="h-4 w-5/6" />
@@ -287,8 +287,8 @@ export default function DirectoryPage() {
                   ))}
                 </div>
               ) : searchResults.length === 0 ? (
-                <div className="rounded-xl border border-border bg-white p-10 text-center">
-                  <p className="text-stone-500">No hadith found. Try fewer or different keywords.</p>
+                <div className="rounded-lg border border-border bg-surface p-10 text-center">
+                  <p className="text-ink-subtle">No hadith found. Try fewer or different keywords.</p>
                 </div>
               ) : (
                 <>
@@ -313,15 +313,15 @@ export default function DirectoryPage() {
                 <div className="mb-6 flex items-center gap-1 text-sm">
                   {breadcrumbs.map((crumb, i) => (
                     <span key={crumb.level} className="flex items-center gap-1">
-                      {i > 0 && <ChevronRight className="h-3 w-3 text-stone-400" />}
+                      {i > 0 && <ChevronRight className="h-3 w-3 text-ink-subtle" />}
                       {i === breadcrumbs.length - 1 ? (
-                        <span className="font-medium text-stone-800" aria-current="page">
+                        <span className="font-medium text-ink" aria-current="page">
                           {crumb.label}
                         </span>
                       ) : (
                         <button
                           type="button"
-                          className="text-stone-500 hover:text-primary"
+                          className="text-ink-subtle hover:text-primary"
                           onClick={() => {
                             setLevel(crumb.level);
                             if (crumb.level === "collections") setSelectedCollection(null);
@@ -351,8 +351,8 @@ export default function DirectoryPage() {
 
               {/* Error */}
               {error && (
-                <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-6 text-center">
-                  <p className="text-sm text-red-600">{error}</p>
+                <div className="mb-6 rounded-lg border border-danger/30 bg-danger-soft p-6 text-center">
+                  <p className="text-sm text-danger">{error}</p>
                 </div>
               )}
 
@@ -360,7 +360,7 @@ export default function DirectoryPage() {
               {loading ? (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {Array.from({ length: 6 }).map((_, i) => (
-                    <div key={i} className="rounded-xl border border-border bg-white p-6">
+                    <div key={i} className="rounded-lg border border-border bg-surface p-6">
                       <Skeleton className="h-6 w-3/4 mb-3" />
                       <Skeleton className="h-4 w-1/2 mb-3" />
                       <Skeleton className="h-5 w-20" />
@@ -383,18 +383,18 @@ export default function DirectoryPage() {
                     <button
                       key={book.id}
                       onClick={() => handleBookClick(book)}
-                      className="group flex items-center justify-between rounded-xl border border-border bg-white p-5 text-left shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
+                      className="group flex items-center justify-between rounded-lg border border-border bg-surface p-5 text-left shadow-card-sl transition-all hover:border-primary/30 hover:shadow-raised-sl"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
                           <BookOpen className="h-5 w-5" />
                         </div>
                         <div>
-                          <h3 className="font-medium text-stone-800 group-hover:text-primary transition-colors">
+                          <h3 className="font-medium text-ink group-hover:text-primary transition-colors">
                             Book {book.book_number}: {book.name_en}
                           </h3>
                           {book.name_ar && (
-                            <p dir="rtl" lang="ar" className="mt-0.5 text-sm text-stone-500 font-arabic">
+                            <p dir="rtl" lang="ar" className="mt-0.5 font-arabic text-[22px] leading-[1.8] text-ink-muted">
                               {book.name_ar}
                             </p>
                           )}
@@ -404,7 +404,7 @@ export default function DirectoryPage() {
                         <Badge variant="default">
                           {book.hadith_count.toLocaleString()} hadith
                         </Badge>
-                        <ChevronRight className="h-4 w-4 text-stone-400 group-hover:text-primary transition-colors" />
+                        <ChevronRight className="h-4 w-4 text-ink-subtle group-hover:text-primary transition-colors" />
                       </div>
                     </button>
                   ))}
@@ -412,7 +412,7 @@ export default function DirectoryPage() {
               ) : (
                 /* Hadiths Level */
                 <div>
-                  <p className="mb-4 text-sm text-stone-500">
+                  <p className="mb-4 text-sm text-ink-subtle">
                     Showing{" "}
                     <strong>{(hadithPage - 1) * hadithPageSize + 1}–
                     {Math.min(hadithPage * hadithPageSize, hadithTotal)}</strong>{" "}
@@ -456,7 +456,7 @@ function Pager({
       <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => onChange(page - 1)}>
         Previous
       </Button>
-      <span className="text-sm text-stone-500">
+      <span className="text-sm text-ink-subtle">
         Page {page} of {totalPages}
       </span>
       <Button

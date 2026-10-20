@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Browse the six canonical hadith collections by book, or search their English text by keyword.",
   openGraph: {
-    title: "Browse & Search the Six Books — SUNNAH LENS",
+    title: "Browse & Search the Six Books — SunnahLens",
     description:
       "Browse the six canonical hadith collections by book, or search their English text by keyword.",
     url: "https://sunnahlens.com/directory",

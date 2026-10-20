@@ -30,12 +30,12 @@ const features = [
 
 export default function ImportanceSection() {
   return (
-    <section className="border-t border-border bg-white/50 px-6 py-20">
+    <section className="border-t border-border bg-surface/50 px-6 py-20">
       <div className="mx-auto max-w-5xl">
-        <h2 className="text-center text-3xl font-bold tracking-tight text-primary">
+        <h2 className="text-center text-3xl sm:text-4xl text-ink">
           Why Learn the Sunnah?
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center text-stone-500">
+        <p className="mx-auto mt-4 max-w-2xl text-center text-ink-subtle">
           {honorifics(
             "The Prophet ﷺ said: \u201cI have left among you two things; you will never go astray " +
               "as long as you hold fast to them: the Book of Allah and my Sunnah.\u201d",
@@ -45,13 +45,13 @@ export default function ImportanceSection() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="flex flex-col items-center rounded-xl border border-border bg-white p-6 text-center shadow-sm"
+              className="flex flex-col items-center rounded-lg border border-border bg-surface p-6 text-center shadow-card-sl"
             >
               <feature.icon className="mb-4 h-10 w-10 text-primary" />
-              <h3 className="text-lg font-semibold text-stone-800">
+              <h3 className="text-lg font-semibold text-ink">
                 {feature.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-stone-500">
+              <p className="mt-2 text-sm leading-relaxed text-ink-subtle">
                 {honorifics(feature.description)}
               </p>
             </div>

@@ -1,0 +1,113 @@
+/* SunnahLens tokens — generated from tokens.json */
+:root, [data-theme="light"] {
+  --brand-green: #0F3D2E;
+  --brand-gold: #A9822F;
+  --brand-gold-light: #D9B45A;
+  --brand-ivory: #F8F5EE;
+  --bg: #F8F5EE;
+  --surface: #FFFFFF;
+  --surface-sunken: #EFEBE1;
+  --border: #DCD6C8;
+  --border-strong: #8A938C;
+  --ink: #16231D;
+  --ink-muted: #4A5A52;
+  --ink-subtle: #5E6C65;
+  --primary: #0F3D2E;
+  --primary-hover: #1A5641;
+  --on-primary: #F8F5EE;
+  --accent: #8A6A22;
+  --accent-soft: #F3E8CC;
+  --focus: #8A6A22;
+  --grade-sahih: #1D6347;
+  --grade-sahih-bg: #DCEDE4;
+  --grade-hasan: #245380;
+  --grade-hasan-bg: #DEE9F4;
+  --grade-daif: #94491A;
+  --grade-daif-bg: #F7E5D6;
+  --grade-mawdu: #8E2A2A;
+  --grade-mawdu-bg: #F6DEDE;
+  --shadow-card: 0 1px 2px rgba(15,61,46,0.06), 0 6px 20px rgba(15,61,46,0.06);
+  --shadow-raised: 0 2px 4px rgba(15,61,46,0.08), 0 12px 32px rgba(15,61,46,0.10);
+}
+[data-theme="dark"] {
+  --bg: #0E1714;
+  --surface: #16221D;
+  --surface-sunken: #0A110E;
+  --border: #2B3B34;
+  --border-strong: #62736A;
+  --ink: #EEF0EA;
+  --ink-muted: #B6C2BB;
+  --ink-subtle: #94A39B;
+  --primary: #D9B45A;
+  --primary-hover: #E6C674;
+  --on-primary: #10201A;
+  --accent: #D9B45A;
+  --accent-soft: #2E2614;
+  --focus: #D9B45A;
+  --grade-sahih: #8FD3B3;
+  --grade-sahih-bg: #173328;
+  --grade-hasan: #A4C6EA;
+  --grade-hasan-bg: #1A2A3B;
+  --grade-daif: #EDB07F;
+  --grade-daif-bg: #3A2616;
+  --grade-mawdu: #F0A6A6;
+  --grade-mawdu-bg: #3B1C1C;
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-raised: 0 2px 6px rgba(0,0,0,0.6), 0 12px 32px rgba(0,0,0,0.4);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1714;
+    --surface: #16221D;
+    --surface-sunken: #0A110E;
+    --border: #2B3B34;
+    --border-strong: #62736A;
+    --ink: #EEF0EA;
+    --ink-muted: #B6C2BB;
+    --ink-subtle: #94A39B;
+    --primary: #D9B45A;
+    --primary-hover: #E6C674;
+    --on-primary: #10201A;
+    --accent: #D9B45A;
+    --accent-soft: #2E2614;
+    --focus: #D9B45A;
+    --grade-sahih: #8FD3B3;
+    --grade-sahih-bg: #173328;
+    --grade-hasan: #A4C6EA;
+    --grade-hasan-bg: #1A2A3B;
+    --grade-daif: #EDB07F;
+    --grade-daif-bg: #3A2616;
+    --grade-mawdu: #F0A6A6;
+    --grade-mawdu-bg: #3B1C1C;
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.5);
+    --shadow-raised: 0 2px 6px rgba(0,0,0,0.6), 0 12px 32px rgba(0,0,0,0.4);
+    color-scheme: dark;
+  }
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-sans: Manrope, "Segoe UI", system-ui, sans-serif;
+  --font-arabic: Amiri, "Noto Naskh Arabic", "Traditional Arabic", serif;
+}
+.display-xl { font-family: var(--font-display); font-size: 56px; line-height: 60px; font-weight: 400; letter-spacing: -0.01em; }
+.display-l { font-family: var(--font-display); font-size: 40px; line-height: 46px; font-weight: 400; letter-spacing: -0.01em; }
+.heading { font-family: var(--font-display); font-size: 28px; line-height: 34px; font-weight: 400; }
+.title { font-family: var(--font-sans); font-size: 18px; line-height: 26px; font-weight: 700; }
+.body { font-family: var(--font-sans); font-size: 16px; line-height: 26px; font-weight: 500; }
+.body-s { font-family: var(--font-sans); font-size: 14px; line-height: 22px; font-weight: 500; }
+.label { font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.arabic-l { font-family: var(--font-arabic); font-size: 30px; line-height: 56px; font-weight: 400; }
+.arabic { font-family: var(--font-arabic); font-size: 24px; line-height: 44px; font-weight: 400; }

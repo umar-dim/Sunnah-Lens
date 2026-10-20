@@ -16,26 +16,26 @@ export default function DevNotice() {
         <Badge variant="secondary" className="mb-4 text-xs">
           In Development
         </Badge>
-        <h2 className="text-2xl font-bold tracking-tight text-primary">
+        <h2 className="text-3xl text-ink">
           Ask, Search &amp; Browse the Six Books
         </h2>
-        <p className="mt-4 text-stone-500 leading-relaxed">
-          SUNNAH LENS covers the <strong>Kutub al-Sittah</strong>, the six canonical
+        <p className="mt-4 text-ink-subtle leading-relaxed">
+          SunnahLens covers the <strong>Kutub al-Sittah</strong>, the six canonical
           hadith collections:
         </p>
-        <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1 text-left text-sm text-stone-600 max-w-md mx-auto">
+        <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1 text-left text-sm text-ink-muted max-w-md mx-auto">
           {SIX_BOOKS.map((book) => (
             <li key={book}>{book}</li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-stone-400">
+        <p className="mt-2 text-xs text-ink-subtle">
           * Sahih Muslim includes primary narrations only.
         </p>
-        <p className="mt-6 text-stone-500 leading-relaxed">
+        <p className="mt-6 text-ink-subtle leading-relaxed">
           <strong>Ask a question</strong>, search, or <strong>browse the directory</strong>{" "}
           by collection and book. Each can be narrowed to the books you choose:
         </p>
-        <ul className="mt-4 space-y-2 text-left text-stone-500 leading-relaxed max-w-md mx-auto">
+        <ul className="mt-4 space-y-2 text-left text-ink-subtle leading-relaxed max-w-md mx-auto">
           <li>
             <strong className="text-primary">Ask</strong> — an AI answer drawn only from
             hadith in the six books, each one cited, on the Ask page. Not a religious ruling.
@@ -49,8 +49,8 @@ export default function DevNotice() {
             search over the English text, in the Directory.
           </li>
         </ul>
-        <p className="mt-4 text-stone-500 leading-relaxed">
-          SUNNAH LENS supports{" "}
+        <p className="mt-4 text-ink-subtle leading-relaxed">
+          SunnahLens supports{" "}
           <strong>only these six primary books of hadith</strong>.
         </p>
         <p className="mt-4 text-lg font-semibold text-primary">
