@@ -77,9 +77,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  icons: {
-    apple: "/apple-touch-icon.png",
-  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
